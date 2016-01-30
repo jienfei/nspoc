@@ -25,7 +25,9 @@ namespace NS_Analytics.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Questions> Questions { get; set; }
-        public virtual DbSet<Periods> Periods { get; set; }
+        public virtual DbSet<Answer> Answer { get; set; }
+        public virtual DbSet<Period> Period { get; set; }
+        public virtual DbSet<Question> Question { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

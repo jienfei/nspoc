@@ -5,51 +5,193 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="NS_AnalyticModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Periods">
+        <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="PeriodName" Type="varchar" MaxLength="50" />
+          <Property Name="QuestionId" Type="int" />
+          <Property Name="PeriodId" Type="int" />
+          <Property Name="Value" Type="int" />
+          <Property Name="UserId" Type="int" />
+        </EntityType>
+        <EntityType Name="Period">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Active" Type="bit" />
         </EntityType>
-        <EntityType Name="Questions">
+        <EntityType Name="Question">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Question" Type="varchar(max)" />
+          <Property Name="Value" Type="varchar(max)" />
           <Property Name="Period" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" />
+          <Property Name="Function" Type="nvarchar" MaxLength="250" />
+        </EntityType>
+        <Association Name="FK_PeriodId_Periods">
+          <End Role="Period" Type="Self.Period" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionId_Questions">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserId_Users">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="NS_AnalyticModelStoreContainer">
-          <EntitySet Name="Periods" EntityType="Self.Periods" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Questions" EntityType="Self.Questions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PeriodId_Periods" Association="Self.FK_PeriodId_Periods">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionId_Questions" Association="Self.FK_QuestionId_Questions">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserId_Users" Association="Self.FK_UserId_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="NS_AnalyticModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="NS_AnalyticModelContainer" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Questions" EntityType="NS_AnalyticModel.Questions" />
-          <EntitySet Name="Periods" EntityType="NS_AnalyticModel.Periods" />
+          <EntitySet Name="Answer" EntityType="NS_AnalyticModel.Answer" />
+          <EntitySet Name="Period" EntityType="NS_AnalyticModel.Period" />
+          <EntitySet Name="Question" EntityType="NS_AnalyticModel.Question" />
+          <EntitySet Name="User" EntityType="NS_AnalyticModel.User" />
+          <AssociationSet Name="FK_PeriodId_Periods" Association="NS_AnalyticModel.FK_PeriodId_Periods">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuestionId_Questions" Association="NS_AnalyticModel.FK_QuestionId_Questions">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserId_Users" Association="NS_AnalyticModel.FK_UserId_Users">
+            <End Role="User" EntitySet="User" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Questions">
+        <EntityType Name="Answer">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Question" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Period" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="QuestionId" Type="Int32" />
+          <Property Name="PeriodId" Type="Int32" />
+          <Property Name="Value" Type="Int32" />
+          <Property Name="UserId" Type="Int32" />
+          <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.FK_PeriodId_Periods" FromRole="Answer" ToRole="Period" />
+          <NavigationProperty Name="Question" Relationship="NS_AnalyticModel.FK_QuestionId_Questions" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="User" Relationship="NS_AnalyticModel.FK_UserId_Users" FromRole="Answer" ToRole="User" />
         </EntityType>
-        <EntityType Name="Periods">
+        <EntityType Name="Period">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PeriodName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Boolean" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_PeriodId_Periods" FromRole="Period" ToRole="Answer" />
         </EntityType>
-      </Schema>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Period" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_QuestionId_Questions" FromRole="Question" ToRole="Answer" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="Function" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_UserId_Users" FromRole="User" ToRole="Answer" />
+        </EntityType>
+        <Association Name="FK_PeriodId_Periods">
+          <End Type="NS_AnalyticModel.Period" Role="Period" Multiplicity="0..1" />
+          <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuestionId_Questions">
+          <End Type="NS_AnalyticModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserId_Users">
+          <End Type="NS_AnalyticModel.User" Role="User" Multiplicity="0..1" />
+          <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -57,20 +199,40 @@
         <Alias Key="Model" Value="NS_AnalyticModel" />
         <Alias Key="Target" Value="NS_AnalyticModel.Store" />
         <EntityContainerMapping CdmEntityContainer="NS_AnalyticModelContainer" StorageEntityContainer="NS_AnalyticModelStoreContainer">
-          <EntitySetMapping Name="Questions">
-            <EntityTypeMapping TypeName="NS_AnalyticModel.Questions">
-              <MappingFragment StoreEntitySet="Questions">
-                <ScalarProperty Name="Period" ColumnName="Period" />
-                <ScalarProperty Name="Question" ColumnName="Question" />
+          <EntitySetMapping Name="Answer">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+                <ScalarProperty Name="QuestionId" ColumnName="QuestionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Periods">
-            <EntityTypeMapping TypeName="NS_AnalyticModel.Periods">
-              <MappingFragment StoreEntitySet="Periods">
+          <EntitySetMapping Name="Period">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.Period">
+              <MappingFragment StoreEntitySet="Period">
                 <ScalarProperty Name="Active" ColumnName="Active" />
-                <ScalarProperty Name="PeriodName" ColumnName="PeriodName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Question">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="Period" ColumnName="Period" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Function" ColumnName="Function" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

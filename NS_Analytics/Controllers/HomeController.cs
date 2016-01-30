@@ -11,9 +11,9 @@ namespace NS_Analytics.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IQuestionsRepository questionsRepository;
+        private readonly IQuestionRepository questionsRepository;
 
-        public HomeController(IQuestionsRepository questionsRepository)
+        public HomeController(IQuestionRepository questionsRepository)
         {
             this.questionsRepository = questionsRepository;
         }

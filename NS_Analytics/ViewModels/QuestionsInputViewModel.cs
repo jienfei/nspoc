@@ -13,7 +13,7 @@ namespace NS_Analytics.ViewModels
                
         }
 
-        public List<Questions> Questions { get; set; }
+        public List<Question> Questions { get; set; }
     }
 
 }

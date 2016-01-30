@@ -17,7 +17,7 @@ namespace NS_Analytics.Controllers
         // GET: Questions
         public ActionResult Index()
         {
-            return View(db.Questions.ToList());
+            return View(db.Question.ToList());
         }
 
         // GET: Questions/Details/5
@@ -27,12 +27,12 @@ namespace NS_Analytics.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = db.Questions.Find(id);
-            if (questions == null)
+            Question question = db.Question.Find(id);
+            if (question == null)
             {
                 return HttpNotFound();
             }
-            return View(questions);
+            return View(question);
         }
 
         // GET: Questions/Create
@@ -46,16 +46,16 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Question,Period")] Questions questions)
+        public ActionResult Create([Bind(Include = "Id,Value,Period")] Question question)
         {
             if (ModelState.IsValid)
             {
-                db.Questions.Add(questions);
+                db.Question.Add(question);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(questions);
+            return View(question);
         }
 
         // GET: Questions/Edit/5
@@ -65,12 +65,12 @@ namespace NS_Analytics.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = db.Questions.Find(id);
-            if (questions == null)
+            Question question = db.Question.Find(id);
+            if (question == null)
             {
                 return HttpNotFound();
             }
-            return View(questions);
+            return View(question);
         }
 
         // POST: Questions/Edit/5
@@ -78,15 +78,15 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Question,Period")] Questions questions)
+        public ActionResult Edit([Bind(Include = "Id,Value,Period")] Question question)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(questions).State = EntityState.Modified;
+                db.Entry(question).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(questions);
+            return View(question);
         }
 
         // GET: Questions/Delete/5
@@ -96,12 +96,12 @@ namespace NS_Analytics.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Questions questions = db.Questions.Find(id);
-            if (questions == null)
+            Question question = db.Question.Find(id);
+            if (question == null)
             {
                 return HttpNotFound();
             }
-            return View(questions);
+            return View(question);
         }
 
         // POST: Questions/Delete/5
@@ -109,8 +109,8 @@ namespace NS_Analytics.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Questions questions = db.Questions.Find(id);
-            db.Questions.Remove(questions);
+            Question question = db.Question.Find(id);
+            db.Question.Remove(question);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -6,13 +6,13 @@ using System.Web;
 
 namespace NS_Analytics.DAL
 {
-    public interface IQuestionsRepository : IGenericRepository<Questions>
+    public interface IQuestionRepository : IGenericRepository<Question>
     {
     }
 
-    public class QuestionsRepository : GenericRepository<Questions>, IQuestionsRepository
+    public class QuestionRepository : GenericRepository<Question>, IQuestionRepository
     {
-        public QuestionsRepository(IDbContext context) : base(context) { }
+        public QuestionRepository(IDbContext context) : base(context) { }
 
         //public GetQuestionsForPeriod(string period)
         //{

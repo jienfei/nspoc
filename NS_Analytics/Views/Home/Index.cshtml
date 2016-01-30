@@ -21,7 +21,7 @@
                         var radioSelection = "RB" + item.Id;
                     }
                     <div>
-                        @Html.Label(item.Question, htmlAttributes: new { @style = "min-width:500px" })
+                        @Html.Label(item.Value, htmlAttributes: new { @style = "min-width:500px" })
                         @Html.RadioButton(radioSelection, "Yes", htmlAttributes: new { @class = "" }) Ja
                         @Html.RadioButton(radioSelection, "No", htmlAttributes: new { @class = "" }) Nee
                         @Html.RadioButton(radioSelection, "Later", htmlAttributes: new { @class = "" }) Later

@@ -12,10 +12,17 @@ namespace NS_Analytics.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Questions
+    public partial class User
     {
+        public User()
+        {
+            this.Answer = new HashSet<Answer>();
+        }
+    
         public int Id { get; set; }
-        public string Question { get; set; }
-        public string Period { get; set; }
+        public string Name { get; set; }
+        public string Function { get; set; }
+    
+        public virtual ICollection<Answer> Answer { get; set; }
     }
 }

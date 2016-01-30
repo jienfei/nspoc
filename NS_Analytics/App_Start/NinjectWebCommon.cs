@@ -66,7 +66,7 @@ namespace NS_Analytics.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IDbContext>().To<NS_AnalyticModelContainer>().InRequestScope();
-            kernel.Bind<IQuestionsRepository>().To<QuestionsRepository>();
+            kernel.Bind<IQuestionRepository>().To<QuestionRepository>();
         }        
     }
 }

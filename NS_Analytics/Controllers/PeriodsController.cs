@@ -17,7 +17,7 @@ namespace NS_Analytics.Controllers
         // GET: Periods
         public ActionResult Index()
         {
-            return View(db.Periods.ToList());
+            return View(db.Period.ToList());
         }
 
         // GET: Periods/Details/5
@@ -27,12 +27,12 @@ namespace NS_Analytics.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Periods periods = db.Periods.Find(id);
-            if (periods == null)
+            Period period = db.Period.Find(id);
+            if (period == null)
             {
                 return HttpNotFound();
             }
-            return View(periods);
+            return View(period);
         }
 
         // GET: Periods/Create
@@ -46,16 +46,16 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PeriodName,Active")] Periods periods)
+        public ActionResult Create([Bind(Include = "Id,Name,Active")] Period period)
         {
             if (ModelState.IsValid)
             {
-                db.Periods.Add(periods);
+                db.Period.Add(period);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(periods);
+            return View(period);
         }
 
         // GET: Periods/Edit/5
@@ -65,12 +65,12 @@ namespace NS_Analytics.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Periods periods = db.Periods.Find(id);
-            if (periods == null)
+            Period period = db.Period.Find(id);
+            if (period == null)
             {
                 return HttpNotFound();
             }
-            return View(periods);
+            return View(period);
         }
 
         // POST: Periods/Edit/5
@@ -78,15 +78,15 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,PeriodName,Active")] Periods periods)
+        public ActionResult Edit([Bind(Include = "Id,Name,Active")] Period period)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(periods).State = EntityState.Modified;
+                db.Entry(period).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(periods);
+            return View(period);
         }
 
         // GET: Periods/Delete/5
@@ -96,12 +96,12 @@ namespace NS_Analytics.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Periods periods = db.Periods.Find(id);
-            if (periods == null)
+            Period period = db.Period.Find(id);
+            if (period == null)
             {
                 return HttpNotFound();
             }
-            return View(periods);
+            return View(period);
         }
 
         // POST: Periods/Delete/5
@@ -109,8 +109,8 @@ namespace NS_Analytics.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Periods periods = db.Periods.Find(id);
-            db.Periods.Remove(periods);
+            Period period = db.Period.Find(id);
+            db.Period.Remove(period);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
