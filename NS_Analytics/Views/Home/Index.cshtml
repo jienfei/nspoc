@@ -1,0 +1,39 @@
+﻿@model NS_Analytics.ViewModels.QuestionsInputViewModel
+@{
+
+    ViewBag.Title = "Home Page";
+}
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+
+        @using (Html.BeginForm())
+        {
+            foreach(var question in Model.Questions)
+            {
+                var radioSelection = "RB" + question.Id;
+                <div>
+                    @question.Question
+                    @Html.RadioButton(radioSelection, "Yes") Ja
+                    @Html.RadioButton(radioSelection, "No") Nee
+                    @Html.RadioButton(radioSelection, "Later") Later
+                </div>
+            }
+
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>@*QuestionInputViewModel*@</h4>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
