@@ -12,20 +12,16 @@ namespace NS_Analytics.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Question
+    public partial class Category
     {
-        public Question()
+        public Category()
         {
-            this.Answer = new HashSet<Answer>();
+            this.Question = new HashSet<Question>();
         }
     
         public int Id { get; set; }
-        public string Value { get; set; }
-        public int PeriodId { get; set; }
-        public int CategoryId { get; set; }
+        public string Name { get; set; }
     
-        public virtual ICollection<Answer> Answer { get; set; }
-        public virtual Category Category { get; set; }
-        public virtual Period Period { get; set; }
+        public virtual ICollection<Question> Question { get; set; }
     }
 }

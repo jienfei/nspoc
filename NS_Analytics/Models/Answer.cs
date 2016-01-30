@@ -15,10 +15,10 @@ namespace NS_Analytics.Models
     public partial class Answer
     {
         public int Id { get; set; }
-        public Nullable<int> QuestionId { get; set; }
-        public Nullable<int> PeriodId { get; set; }
-        public Nullable<int> Value { get; set; }
-        public Nullable<int> UserId { get; set; }
+        public int QuestionId { get; set; }
+        public int PeriodId { get; set; }
+        public int Value { get; set; }
+        public int UserId { get; set; }
     
         public virtual Period Period { get; set; }
         public virtual Question Question { get; set; }

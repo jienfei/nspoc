@@ -17,6 +17,7 @@ namespace NS_Analytics.Models
         public Period()
         {
             this.Answer = new HashSet<Answer>();
+            this.Question = new HashSet<Question>();
         }
     
         public int Id { get; set; }
@@ -24,5 +25,6 @@ namespace NS_Analytics.Models
         public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<Answer> Answer { get; set; }
+        public virtual ICollection<Question> Question { get; set; }
     }
 }

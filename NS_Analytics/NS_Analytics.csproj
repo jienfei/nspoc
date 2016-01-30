@@ -220,6 +220,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DAL\QuestionRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\AnswersViewModel.cs" />
     <Compile Include="ViewModels\QuestionsInputViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

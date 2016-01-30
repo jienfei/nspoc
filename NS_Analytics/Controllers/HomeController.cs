@@ -19,19 +19,34 @@ namespace NS_Analytics.Controllers
             this.questionsRepository = questionsRepository;
         }
 
-        public ActionResult Index(string period = "1")
+        public ActionResult Index(int periodId = 1)
         {
-            var answers = db.Answer.Where(a => a.Period.Name == period);
-            //var questions = db.Question.Where(q => q.Period == "1").ToList();
+            var userId = 1;
+            var answers = db.Answer.Where(a => a.PeriodId == periodId && a.UserId == userId).ToList();
+            var questions = db.Question.Where(q => q.PeriodId == periodId).ToList();
 
-            //db.Period.Add(period);
-            //db.SaveChanges();
+            //var missingQuestionIds = new List<int>();
 
+            var missingQuestionIds = questions.Select(q => q.Id).Except(answers.Select(a => a.QuestionId));
 
-            var questions = questionsRepository.FindBy(c => c.Period == "1").ToList();
+            //foreach (var question in questions)
+            //{
+            //    if (!answers.Select(a => a.QuestionId).ToList().Contains(question.Id))
+            //    {
+            //        missingQuestionIds.Add(question.Id);
+            //    }
+            //}
 
-            var model = new QuestionsInputViewModel();
-            model.Questions = questions;
+            foreach (var id in missingQuestionIds)
+            {
+                db.Answer.Add(new Answer{ QuestionId = id, Value = 2, PeriodId = periodId, UserId = userId });
+            }
+            db.SaveChanges();
+
+            answers = db.Answer.Where(a => a.PeriodId == periodId && a.UserId == userId).ToList();
+
+            var model = new AnswersViewModel();
+            model.Answers = answers;
 
             return View(model);
         }

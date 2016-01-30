@@ -73,6 +73,7 @@ namespace NS_Analytics.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.PeriodId = new SelectList(db.Period, "Id", "Name", question.PeriodId);
             ViewBag.CategoryId = new SelectList(db.Category, "Id", "Name", question.CategoryId);
             return View(question);
         }
@@ -90,6 +91,7 @@ namespace NS_Analytics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.PeriodId = new SelectList(db.Period, "Id", "Name", question.PeriodId);
             ViewBag.CategoryId = new SelectList(db.Category, "Id", "Name", question.CategoryId);
             return View(question);
         }
