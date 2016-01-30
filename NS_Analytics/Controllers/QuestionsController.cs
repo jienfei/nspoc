@@ -17,7 +17,8 @@ namespace NS_Analytics.Controllers
         // GET: Questions
         public ActionResult Index()
         {
-            return View(db.Question.ToList());
+            var question = db.Question.Include(q => q.Category);
+            return View(question.ToList());
         }
 
         // GET: Questions/Details/5
@@ -38,6 +39,7 @@ namespace NS_Analytics.Controllers
         // GET: Questions/Create
         public ActionResult Create()
         {
+            ViewBag.CategoryId = new SelectList(db.Category, "Id", "Name");
             return View();
         }
 
@@ -46,7 +48,7 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Value,Period")] Question question)
+        public ActionResult Create([Bind(Include = "Id,Value,Period,CategoryId")] Question question)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +57,7 @@ namespace NS_Analytics.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.CategoryId = new SelectList(db.Category, "Id", "Name", question.CategoryId);
             return View(question);
         }
 
@@ -70,6 +73,7 @@ namespace NS_Analytics.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryId = new SelectList(db.Category, "Id", "Name", question.CategoryId);
             return View(question);
         }
 
@@ -78,7 +82,7 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Value,Period")] Question question)
+        public ActionResult Edit([Bind(Include = "Id,Value,Period,CategoryId")] Question question)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +90,7 @@ namespace NS_Analytics.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.CategoryId = new SelectList(db.Category, "Id", "Name", question.CategoryId);
             return View(question);
         }
 

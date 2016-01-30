@@ -4,13 +4,13 @@
     ViewBag.Title = "Home Page";
 }
 
+<h2>Antwoorden</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Questions</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @foreach (var item in Model.Questions)
@@ -22,9 +22,9 @@
                     }
                     <div>
                         @Html.Label(item.Value, htmlAttributes: new { @style = "min-width:500px" })
-                        @Html.RadioButton(radioSelection, "Yes", htmlAttributes: new { @class = "" }) Ja
-                        @Html.RadioButton(radioSelection, "No", htmlAttributes: new { @class = "" }) Nee
-                        @Html.RadioButton(radioSelection, "Later", htmlAttributes: new { @class = "" }) Later
+                        @Html.RadioButton(radioSelection, 1, htmlAttributes: new { @class = "" }) Ja
+                        @Html.RadioButton(radioSelection, 0, htmlAttributes: new { @class = "" }) Nee
+                        @Html.RadioButton(radioSelection, 2, htmlAttributes: new { @class = "" }) Later
                     </div>
                 </div>
             </div>
@@ -36,35 +36,3 @@
         </div>
     </div>
 }
-
-
-@*<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-
-        @using (Html.BeginForm())
-        {
-            foreach(var question in Model.Questions)
-            {
-                var radioSelection = "RB" + question.Id;
-                <div>
-                    @question.Question
-                    @Html.RadioButton(radioSelection, "Yes") Ja
-                    @Html.RadioButton(radioSelection, "No") Nee
-                    @Html.RadioButton(radioSelection, "Later") Later
-                </div>
-            }
-
-            @Html.AntiForgeryToken()
-
-            <div class="form-horizontal">
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Save" class="btn btn-default" />
-                    </div>
-                </div>
-            </div>
-        }
-    </div>
-</div>*@

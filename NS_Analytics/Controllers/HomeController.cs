@@ -11,6 +11,7 @@ namespace NS_Analytics.Controllers
 {
     public class HomeController : Controller
     {
+        private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();
         private readonly IQuestionRepository questionsRepository;
 
         public HomeController(IQuestionRepository questionsRepository)
@@ -18,8 +19,15 @@ namespace NS_Analytics.Controllers
             this.questionsRepository = questionsRepository;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(string period = "1")
         {
+            var answers = db.Answer.Where(a => a.Period.Name == period);
+            //var questions = db.Question.Where(q => q.Period == "1").ToList();
+
+            //db.Period.Add(period);
+            //db.SaveChanges();
+
+
             var questions = questionsRepository.FindBy(c => c.Period == "1").ToList();
 
             var model = new QuestionsInputViewModel();
