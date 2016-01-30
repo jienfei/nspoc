@@ -26,5 +26,6 @@ namespace NS_Analytics.Models
         }
     
         public virtual DbSet<Questions> Questions { get; set; }
+        public virtual DbSet<Periods> Periods { get; set; }
     }
 }

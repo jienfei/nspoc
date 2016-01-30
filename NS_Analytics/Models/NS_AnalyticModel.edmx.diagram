@@ -6,6 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="66cc902ec7f74b2e8b97cf27ea0bd0e1" Name="Diagram1" >
         <EntityTypeShape EntityType="NS_AnalyticModel.Questions" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Periods" Width="1.5" PointX="3.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

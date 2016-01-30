@@ -5,8 +5,40 @@
 }
 
 
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
 
-<div class="row">
+    <div class="form-horizontal">
+        <h4>Questions</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @foreach (var item in Model.Questions)
+        { 
+            <div class="form-group">
+                <div class="col-md-10">
+                    @{
+                        var radioSelection = "RB" + item.Id;
+                    }
+                    <div>
+                        @Html.Label(item.Question, htmlAttributes: new { @style = "min-width:500px" })
+                        @Html.RadioButton(radioSelection, "Yes", htmlAttributes: new { @class = "" }) Ja
+                        @Html.RadioButton(radioSelection, "No", htmlAttributes: new { @class = "" }) Nee
+                        @Html.RadioButton(radioSelection, "Later", htmlAttributes: new { @class = "" }) Later
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+
+@*<div class="row">
     <div class="col-md-4">
         <h2>Getting started</h2>
 
@@ -26,7 +58,6 @@
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>@*QuestionInputViewModel*@</h4>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
@@ -36,4 +67,4 @@
             </div>
         }
     </div>
-</div>
+</div>*@
