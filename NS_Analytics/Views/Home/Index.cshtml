@@ -4,7 +4,7 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>Vragen</h2>
+<h2>Vragen - @Model.Answers.First().Question.Category.Name</h2>
 
 @using (Html.BeginForm())
 {
