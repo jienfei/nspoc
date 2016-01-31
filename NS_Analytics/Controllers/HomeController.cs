@@ -24,6 +24,13 @@ namespace NS_Analytics.Controllers
             var userId = 1;
             var categoryId = 1;
             var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        private AnswersViewModel AnswersFilter(int periodId, int userId, int categoryId, int projectId)
+        {
             var answers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
             var questions = db.Question.Where(q => q.CategoryId == categoryId).ToList();
 
@@ -31,7 +38,7 @@ namespace NS_Analytics.Controllers
 
             foreach (var id in missingQuestionIds)
             {
-                db.Answer.Add(new Answer{ QuestionId = id, Value = 0, PeriodId = periodId, UserId = userId, ProjectId = projectId });
+                db.Answer.Add(new Answer { QuestionId = id, Value = 0, PeriodId = periodId, UserId = userId, ProjectId = projectId });
             }
             db.SaveChanges();
 
@@ -39,13 +46,47 @@ namespace NS_Analytics.Controllers
 
             var model = new AnswersViewModel();
             model.Answers = answers;
+            return model;
+        }
+
+        public ActionResult Elicitatie(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 1;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
 
             return View(model);
         }
 
-        public ActionResult About()
+        public ActionResult Analyse(int periodId = 1)
         {
-            return View();
+            var userId = 1;
+            var categoryId = 2;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        public ActionResult Specificatie(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 3;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        public ActionResult Validatie(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 4;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
         }
 
         public ActionResult Contact()

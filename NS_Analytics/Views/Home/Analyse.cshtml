@@ -1,19 +1,15 @@
 ﻿@model NS_Analytics.ViewModels.AnswersViewModel
-@{
-
-    ViewBag.Title = "Home Page";
-}
 
 <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
         <li>@Html.ActionLink("Elicitatie", "Elicitatie", "Home")</li>
-        <li>@Html.ActionLink("Analyse", "Analyse", "Home")</li>
+        <li>@Html.ActionLink("Analyse", "Analyse", "Home", htmlAttributes: new { @style = "background-color:#C0C0C0" })</li>
         <li>@Html.ActionLink("Specificatie", "Specificatie", "Home")</li>
         <li>@Html.ActionLink("Validatie", "Validatie", "Home")</li>
     </ul>
 </div>
 
-<h2>Vragen</h2>
+<h2>Analyse</h2>
 
 @using (Html.BeginForm())
 {
@@ -31,9 +27,6 @@
                         @Html.RadioButtonFor(m => m.Answers[i].Value, 1, htmlAttributes: new { @class = "" }) Ja
                         @Html.RadioButtonFor(m => m.Answers[i].Value, 0, htmlAttributes: new { @class = "" }) Nee
                         @Html.EditorFor(m => m.Answers[i].Remark, new { htmlAttributes = new { @style = "float:right", @class = "form-control" } })
-                    </div>
-                    <div>
-
                     </div>
                 </div>
             </div>

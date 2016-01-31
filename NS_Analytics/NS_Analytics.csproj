@@ -327,6 +327,10 @@
     <Content Include="Views\Projects\Details.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
+    <Content Include="Views\Home\Elicitatie.cshtml" />
+    <Content Include="Views\Home\Analyse.cshtml" />
+    <Content Include="Views\Home\Specificatie.cshtml" />
+    <Content Include="Views\Home\Validatie.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

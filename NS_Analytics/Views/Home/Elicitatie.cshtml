@@ -6,14 +6,14 @@
 
 <div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
-        <li>@Html.ActionLink("Elicitatie", "Elicitatie", "Home")</li>
+        <li>@Html.ActionLink("Elicitatie", "Elicitatie", "Home", htmlAttributes: new { @style = "background-color:#C0C0C0" })</li>
         <li>@Html.ActionLink("Analyse", "Analyse", "Home")</li>
         <li>@Html.ActionLink("Specificatie", "Specificatie", "Home")</li>
         <li>@Html.ActionLink("Validatie", "Validatie", "Home")</li>
     </ul>
 </div>
 
-<h2>Vragen</h2>
+<h2>Elicitatie</h2>
 
 @using (Html.BeginForm())
 {
