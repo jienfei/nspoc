@@ -47,11 +47,15 @@ CREATE TABLE [dbo].[Period] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+INSERT INTO Period VALUES ('TestPeriod', 0)
+
 CREATE TABLE [dbo].[Project] (
     [Id]   INT           IDENTITY (1, 1) NOT NULL,
     [Name] VARCHAR (250) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
+
+INSERT INTO Project VALUES ('TestProject')
 
 CREATE TABLE [dbo].[Question] (
     [Id]         INT           IDENTITY (1, 1) NOT NULL,
@@ -60,6 +64,24 @@ CREATE TABLE [dbo].[Question] (
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_CategoryId_Category] FOREIGN KEY ([CategoryId]) REFERENCES [dbo].[Category] ([Id])
 );
+
+INSERT INTO QUESTION VALUES ('Zijn er verschillende groepen?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de stakeholders bekend?', 1)
+INSERT INTO QUESTION VALUES ('Wie is de vertegenwoordiger van de groep?', 1)
+INSERT INTO QUESTION VALUES ('Is het domein duidelijk voor de requirements?', 1)
+INSERT INTO QUESTION VALUES ('Ondersteunt het systeem het bedrijfsproces?', 1)
+INSERT INTO QUESTION VALUES ('Is de noodzakelijke voorwaarde van de requirements juist?', 1)
+INSERT INTO QUESTION VALUES ('Is de noodzakelijke voorwaarde van de requirements volledig?', 1)
+INSERT INTO QUESTION VALUES ('Is er genoeg capaciteit uit de operationele processen?', 1)
+INSERT INTO QUESTION VALUES ('Biedt het systeem ondersteuning aan het bedrijfsproces?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de requirements geaccepteerd door de gebruikers?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de gebruikers betrokken geweest bij het project?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de wensen geïnventariseerd?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de eisen geïnventariseerd?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de requirements expliciet gemaakt?', 1)
+INSERT INTO QUESTION VALUES ('Is de informatie analist actief betrokken geweest tijdens het proces?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de requirements vastgelegd in een brondocument?', 1)
+INSERT INTO QUESTION VALUES ('Zijn de gedetaileerde requirements herleid van de oorspronkelijke requirements?', 1)
 
 CREATE TABLE [dbo].[Answer] (
     [Id]         INT           IDENTITY (1, 1) NOT NULL,

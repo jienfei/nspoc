@@ -10,14 +10,14 @@
         @for (var i = 0; i < Model.Answers.Count; i++)
         {
             <div class="form-group">
-                <div class="col-md-10">
+                <div class="col-md-12">
                     <div>
                         @Html.HiddenFor(m => m.Answers[i].Id)
                         @Html.HiddenFor(m => m.Answers[i].QuestionId)
                         @Html.HiddenFor(m => m.Answers[i].PeriodId)
                         @Html.HiddenFor(m => m.Answers[i].UserId)
                         @Html.HiddenFor(m => m.Answers[i].ProjectId)
-                        @Html.Label(Model.Answers[i].Question.Value, htmlAttributes: new { @style = "min-width:300px" })
+                        @Html.Label(Model.Answers[i].Question.Value, htmlAttributes: new { @style = "min-width:600px" })
                         @Html.RadioButtonFor(m => m.Answers[i].Value, 1, htmlAttributes: new { @class = "" }) Ja
                         @Html.RadioButtonFor(m => m.Answers[i].Value, 0, htmlAttributes: new { @class = "" }) Nee
                         @Html.EditorFor(m => m.Answers[i].Remark, new { htmlAttributes = new { @style = "float:right", @class = "form-control" } })
