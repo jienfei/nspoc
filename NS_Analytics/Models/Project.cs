@@ -12,16 +12,15 @@ namespace NS_Analytics.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Period
+    public partial class Project
     {
-        public Period()
+        public Project()
         {
             this.Answer = new HashSet<Answer>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public Nullable<bool> Active { get; set; }
     
         public virtual ICollection<Answer> Answer { get; set; }
     }

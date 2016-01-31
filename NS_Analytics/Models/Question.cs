@@ -21,11 +21,9 @@ namespace NS_Analytics.Models
     
         public int Id { get; set; }
         public string Value { get; set; }
-        public int PeriodId { get; set; }
         public int CategoryId { get; set; }
     
         public virtual ICollection<Answer> Answer { get; set; }
         public virtual Category Category { get; set; }
-        public virtual Period Period { get; set; }
     }
 }

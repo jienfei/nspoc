@@ -22,8 +22,9 @@ namespace NS_Analytics.Controllers
         public ActionResult Index(int periodId = 1)
         {
             var userId = 1;
+            var categoryId = 1;
             var answers = db.Answer.Where(a => a.PeriodId == periodId && a.UserId == userId).ToList();
-            var questions = db.Question.Where(q => q.PeriodId == periodId).ToList();
+            var questions = db.Question.Where(q => q.CategoryId == categoryId).ToList();
 
             //var missingQuestionIds = new List<int>();
 
@@ -39,7 +40,7 @@ namespace NS_Analytics.Controllers
 
             foreach (var id in missingQuestionIds)
             {
-                db.Answer.Add(new Answer{ QuestionId = id, Value = 2, PeriodId = periodId, UserId = userId });
+                db.Answer.Add(new Answer{ QuestionId = id, Value = 0, PeriodId = periodId, UserId = userId });
             }
             db.SaveChanges();
 

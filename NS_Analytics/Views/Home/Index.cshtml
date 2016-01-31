@@ -18,10 +18,13 @@
             <div class="form-group">
                 <div class="col-md-10">
                     <div>
-                        @Html.Label(Model.Answers[i].Question.Value, htmlAttributes: new { @style = "min-width:500px" })
+                        @Html.Label(Model.Answers[i].Question.Value, htmlAttributes: new { @style = "min-width:300px" })
                         @Html.RadioButtonFor(m => m.Answers[i].Value, 1, htmlAttributes: new { @class = "" }) Ja
                         @Html.RadioButtonFor(m => m.Answers[i].Value, 0, htmlAttributes: new { @class = "" }) Nee
-                        @Html.RadioButtonFor(m => m.Answers[i].Value, 2, htmlAttributes: new { @class = "" }) Later
+                        @Html.EditorFor(m => m.Answers[i].Remark, new { htmlAttributes = new { @style = "float:right", @class = "form-control" } })
+                    </div>
+                    <div>
+                        
                     </div>
                 </div>
             </div>

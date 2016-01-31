@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'c:\users\jien.fei.li\documents\visual studio 2013\Projects\NS_Analytics\NS_Analytics\Models\NS_AnalyticModel.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\jien.fei.li\Documents\Visual Studio 2013\Projects\NS_Analytics\NS_Analytics\Models\NS_AnalyticModel.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

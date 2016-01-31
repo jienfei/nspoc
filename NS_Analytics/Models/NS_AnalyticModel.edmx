@@ -14,6 +14,8 @@
           <Property Name="PeriodId" Type="int" Nullable="false" />
           <Property Name="Value" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
+          <Property Name="Remark" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -30,13 +32,19 @@
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Active" Type="bit" />
         </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="250" />
+        </EntityType>
         <EntityType Name="Question">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Value" Type="varchar(max)" />
-          <Property Name="PeriodId" Type="int" Nullable="false" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="User">
@@ -61,18 +69,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PeriodId_Period">
-          <End Role="Period" Type="Self.Period" Multiplicity="1" />
-          <End Role="Question" Type="Self.Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Period">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="PeriodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PeriodId_Periods">
           <End Role="Period" Type="Self.Period" Multiplicity="1" />
           <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
@@ -82,6 +78,18 @@
             </Principal>
             <Dependent Role="Answer">
               <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectId_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="ProjectId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -113,18 +121,19 @@
           <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_CategoryId_Category" Association="Self.FK_CategoryId_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_PeriodId_Period" Association="Self.FK_PeriodId_Period">
-            <End Role="Period" EntitySet="Period" />
-            <End Role="Question" EntitySet="Question" />
-          </AssociationSet>
           <AssociationSet Name="FK_PeriodId_Periods" Association="Self.FK_PeriodId_Periods">
             <End Role="Period" EntitySet="Period" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectId_Project" Association="Self.FK_ProjectId_Project">
+            <End Role="Project" EntitySet="Project" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
           <AssociationSet Name="FK_QuestionId_Questions" Association="Self.FK_QuestionId_Questions">
@@ -144,10 +153,15 @@
           <EntitySet Name="Answer" EntityType="NS_AnalyticModel.Answer" />
           <EntitySet Name="Category" EntityType="NS_AnalyticModel.Category" />
           <EntitySet Name="Period" EntityType="NS_AnalyticModel.Period" />
+          <EntitySet Name="Project" EntityType="NS_AnalyticModel.Project" />
           <EntitySet Name="Question" EntityType="NS_AnalyticModel.Question" />
           <EntitySet Name="User" EntityType="NS_AnalyticModel.User" />
           <AssociationSet Name="FK_PeriodId_Periods" Association="NS_AnalyticModel.FK_PeriodId_Periods">
             <End Role="Period" EntitySet="Period" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectId_Project" Association="NS_AnalyticModel.FK_ProjectId_Project">
+            <End Role="Project" EntitySet="Project" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
           <AssociationSet Name="FK_QuestionId_Questions" Association="NS_AnalyticModel.FK_QuestionId_Questions">
@@ -162,10 +176,6 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_PeriodId_Period" Association="NS_AnalyticModel.FK_PeriodId_Period">
-            <End Role="Period" EntitySet="Period" />
-            <End Role="Question" EntitySet="Question" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Answer">
           <Key>
@@ -176,9 +186,12 @@
           <Property Name="PeriodId" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.FK_PeriodId_Periods" FromRole="Answer" ToRole="Period" />
+          <NavigationProperty Name="Project" Relationship="NS_AnalyticModel.FK_ProjectId_Project" FromRole="Answer" ToRole="Project" />
           <NavigationProperty Name="Question" Relationship="NS_AnalyticModel.FK_QuestionId_Questions" FromRole="Answer" ToRole="Question" />
           <NavigationProperty Name="User" Relationship="NS_AnalyticModel.FK_UserId_Users" FromRole="Answer" ToRole="User" />
+          <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -196,7 +209,14 @@
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Active" Type="Boolean" />
           <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_PeriodId_Periods" FromRole="Period" ToRole="Answer" />
-          <NavigationProperty Name="Question" Relationship="NS_AnalyticModel.FK_PeriodId_Period" FromRole="Period" ToRole="Question" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_ProjectId_Project" FromRole="Project" ToRole="Answer" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -204,11 +224,9 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PeriodId" Type="Int32" Nullable="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_QuestionId_Questions" FromRole="Question" ToRole="Answer" />
           <NavigationProperty Name="Category" Relationship="NS_AnalyticModel.FK_CategoryId_Category" FromRole="Question" ToRole="Category" />
-          <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.FK_PeriodId_Period" FromRole="Question" ToRole="Period" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -230,6 +248,18 @@
             </Principal>
             <Dependent Role="Answer">
               <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectId_Project">
+          <End Type="NS_AnalyticModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="ProjectId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -269,18 +299,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PeriodId_Period">
-          <End Type="NS_AnalyticModel.Period" Role="Period" Multiplicity="1" />
-          <End Type="NS_AnalyticModel.Question" Role="Question" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Period">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Question">
-              <PropertyRef Name="PeriodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -292,6 +310,8 @@
           <EntitySetMapping Name="Answer">
             <EntityTypeMapping TypeName="NS_AnalyticModel.Answer">
               <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
@@ -317,11 +337,18 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Project">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Question">
             <EntityTypeMapping TypeName="NS_AnalyticModel.Question">
               <MappingFragment StoreEntitySet="Question">
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
-                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
