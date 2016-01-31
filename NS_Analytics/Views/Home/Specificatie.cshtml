@@ -15,33 +15,4 @@
 
 <h2>Specificatie</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @for (var i = 0; i < Model.Answers.Count; i++)
-        {
-            <div class="form-group">
-                <div class="col-md-10">
-                    <div>
-                        @Html.Label(Model.Answers[i].Question.Value, htmlAttributes: new { @style = "min-width:300px" })
-                        @Html.RadioButtonFor(m => m.Answers[i].Value, 1, htmlAttributes: new { @class = "" }) Ja
-                        @Html.RadioButtonFor(m => m.Answers[i].Value, 0, htmlAttributes: new { @class = "" }) Nee
-                        @Html.EditorFor(m => m.Answers[i].Remark, new { htmlAttributes = new { @style = "float:right", @class = "form-control" } })
-                    </div>
-                    <div>
-
-                    </div>
-                </div>
-            </div>
-        }
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
+@Html.Partial("AnswersForm", Model)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
 
 namespace NS_Analytics.Controllers
 {
@@ -29,6 +30,74 @@ namespace NS_Analytics.Controllers
             return View(model);
         }
 
+        public ActionResult Elicitatie(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 1;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Elicitatie(AnswersViewModel model)
+        {
+            SaveAnswerChanges(model);
+            return RedirectToAction("Elicitatie");
+        }
+
+        public ActionResult Analyse(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 2;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Analyse(AnswersViewModel model)
+        {
+            SaveAnswerChanges(model);
+            return RedirectToAction("Analyse");
+        }
+
+        public ActionResult Specificatie(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 3;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Specificatie(AnswersViewModel model)
+        {
+            SaveAnswerChanges(model);
+            return RedirectToAction("Specificatie");
+        }
+
+        public ActionResult Validatie(int periodId = 1)
+        {
+            var userId = 1;
+            var categoryId = 4;
+            var projectId = 1;
+            var model = AnswersFilter(periodId, userId, categoryId, projectId);
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public ActionResult Validatie(AnswersViewModel model)
+        {
+            SaveAnswerChanges(model);
+            return RedirectToAction("Validatie");
+        }
+
         private AnswersViewModel AnswersFilter(int periodId, int userId, int categoryId, int projectId)
         {
             var answers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
@@ -49,44 +118,16 @@ namespace NS_Analytics.Controllers
             return model;
         }
 
-        public ActionResult Elicitatie(int periodId = 1)
+        private void SaveAnswerChanges(AnswersViewModel model)
         {
-            var userId = 1;
-            var categoryId = 1;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
-            return View(model);
-        }
-
-        public ActionResult Analyse(int periodId = 1)
-        {
-            var userId = 1;
-            var categoryId = 2;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
-            return View(model);
-        }
-
-        public ActionResult Specificatie(int periodId = 1)
-        {
-            var userId = 1;
-            var categoryId = 3;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
-            return View(model);
-        }
-
-        public ActionResult Validatie(int periodId = 1)
-        {
-            var userId = 1;
-            var categoryId = 4;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
-            return View(model);
+            if (ModelState.IsValid)
+            {
+                foreach (var answer in model.Answers)
+                {
+                    db.Entry(answer).State = EntityState.Modified;
+                }
+                db.SaveChanges();
+            }
         }
 
         public ActionResult Contact()
