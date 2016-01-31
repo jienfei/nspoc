@@ -20,6 +20,8 @@ CREATE TABLE [dbo].[User] (
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
+INSERT INTO [dbo].[User] VALUES ('Admin', 'Admin', 'admin', 'admin')
+
 CREATE TABLE [dbo].[Category] (
     [Id]   INT           IDENTITY (1, 1) NOT NULL,
     [Name] VARCHAR (250) NULL,
@@ -30,8 +32,13 @@ INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Elicitatie')
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Analyse')
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Specificatie')
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Validatie')
-INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REM1')
-INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REM2')
+INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS1')
+INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS2')
+INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS3')
+INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS4')
+INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS5')
+INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS6')
+
 
 CREATE TABLE [dbo].[Period] (
     [Id]     INT          IDENTITY (1, 1) NOT NULL,

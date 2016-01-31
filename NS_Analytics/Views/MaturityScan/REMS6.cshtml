@@ -1,0 +1,16 @@
+﻿@model NS_Analytics.ViewModels.AnswersViewModel
+
+<div class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("REMS1", "REMS1", "MaturityScan")</li>
+        <li>@Html.ActionLink("REMS2", "REMS2", "MaturityScan")</li>
+        <li>@Html.ActionLink("REMS3", "REMS3", "MaturityScan")</li>
+        <li>@Html.ActionLink("REMS4", "REMS4", "MaturityScan")</li>
+        <li>@Html.ActionLink("REMS5", "REMS5", "MaturityScan")</li>
+        <li>@Html.ActionLink("REMS6", "REMS6", "MaturityScan", htmlAttributes: new { @style = "background-color:#C0C0C0" })</li>
+    </ul>
+</div>
+
+<h2>REMS6</h2>
+
+@Html.Partial("AnswersForm", Model)

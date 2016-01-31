@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MaturityScanController.cs" />
     <Compile Include="Controllers\PeriodsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
     <Compile Include="Controllers\QuestionsController.cs" />
@@ -333,6 +334,13 @@
     <Content Include="Views\Home\Specificatie.cshtml" />
     <Content Include="Views\Home\Validatie.cshtml" />
     <Content Include="Views\Home\AnswersForm.cshtml" />
+    <Content Include="Views\MaturityScan\REMS1.cshtml" />
+    <Content Include="Views\MaturityScan\AnswersForm.cshtml" />
+    <Content Include="Views\MaturityScan\REMS2.cshtml" />
+    <Content Include="Views\MaturityScan\REMS3.cshtml" />
+    <Content Include="Views\MaturityScan\REMS4.cshtml" />
+    <Content Include="Views\MaturityScan\REMS5.cshtml" />
+    <Content Include="Views\MaturityScan\REMS6.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
