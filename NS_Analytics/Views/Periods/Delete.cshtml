@@ -27,6 +27,14 @@
             @Html.DisplayFor(model => model.Active)
         </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Project.Name)
+        </dd>
+
     </dl>
 
     @using (Html.BeginForm()) {

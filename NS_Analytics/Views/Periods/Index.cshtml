@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<NS_Analytics.Models.Period>
 
 @{
-    ViewBag.Title = "Periodes";
+    ViewBag.Title = "Index";
 }
 
-<h2>Periodes</h2>
+<h2>Index</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -17,6 +17,9 @@
         <th>
             @Html.DisplayNameFor(model => model.Active)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Project.Name)
+        </th>
         <th></th>
     </tr>
 
@@ -27,6 +30,9 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Active)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project.Name)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

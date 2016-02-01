@@ -11,16 +11,28 @@ DROP TABLE [dbo].[Period];
 DROP TABLE [dbo].[Project];
 DROP TABLE [dbo].[User];
 
+CREATE TABLE [dbo].[Role]
+(
+	[Id] INT NOT NULL PRIMARY KEY IDENTITY, 
+    [Name] VARCHAR(50) NULL
+)
+
+INSERT INTO [dbo].[Role] ([Name]) VALUES ('Geen')
+INSERT INTO [dbo].[Role] ([Name]) VALUES ('Admin')
+INSERT INTO [dbo].[Role] ([Name]) VALUES ('Business Analist')
+INSERT INTO [dbo].[Role] ([Name]) VALUES ('Manager')
+
 CREATE TABLE [dbo].[User] (
     [Id]       INT            IDENTITY (1, 1) NOT NULL,
     [Name]     NVARCHAR (250) NULL,
-    [Role]     NVARCHAR (250) NULL,
+    [RoleId]     INT NULL ,
     [Username] NVARCHAR (50)  NULL,
     [Password] NVARCHAR (50)  NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
+    PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [FK_User_RoleId_Role] FOREIGN KEY ([RoleId]) REFERENCES [Role]([Id])
 );
 
-INSERT INTO [dbo].[User] VALUES ('Admin', 'Admin', 'admin', 'admin')
+INSERT INTO [dbo].[User] VALUES ('Admin', NULL, 'admin', 'admin123')
 
 CREATE TABLE [dbo].[Category] (
     [Id]   INT           IDENTITY (1, 1) NOT NULL,
@@ -40,22 +52,33 @@ INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS5')
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('MaturityScan - REMS6')
 
 
-CREATE TABLE [dbo].[Period] (
-    [Id]     INT          IDENTITY (1, 1) NOT NULL,
-    [Name]   VARCHAR (50) NULL,
-    [Active] BIT          NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
-);
-
-INSERT INTO Period VALUES ('TestPeriod', 0)
-
 CREATE TABLE [dbo].[Project] (
     [Id]   INT           IDENTITY (1, 1) NOT NULL,
     [Name] VARCHAR (250) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
-INSERT INTO Project VALUES ('TestProject')
+INSERT INTO Project VALUES ('-- Geen --')
+
+CREATE TABLE [dbo].[Period] (
+    [Id]     INT          IDENTITY (1, 1) NOT NULL,
+    [Name]   VARCHAR (50) NULL,
+    [Active] BIT          NOT NULL DEFAULT 0,
+    [ProjectId] INT NOT NULL DEFAULT 1, 
+    PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [FK_Period_ProjectId_Project] FOREIGN KEY ([ProjectId]) REFERENCES [Project]([Id])
+);
+
+INSERT INTO Period VALUES ('-- Geen --', 0, 1)
+
+CREATE TABLE [dbo].[UserPeriod]
+(
+	[UserId] INT NOT NULL , 
+    [PeriodId] INT NOT NULL, 
+    PRIMARY KEY ([UserId], [PeriodId]), 
+    CONSTRAINT [FK_UserPeriod_UserId_User] FOREIGN KEY ([UserId]) REFERENCES [User]([Id]), 
+    CONSTRAINT [FK_UserPeriod_PeriodId_Period] FOREIGN KEY ([PeriodId]) REFERENCES [Period]([Id]) 
+)
 
 CREATE TABLE [dbo].[Question] (
     [Id]         INT           IDENTITY (1, 1) NOT NULL,
@@ -150,11 +173,11 @@ CREATE TABLE [dbo].[Answer] (
     [PeriodId]   INT           NOT NULL,
     [Value]      INT           DEFAULT ((2)) NOT NULL,
     [UserId]     INT           NOT NULL,
-    [ProjectId]  INT           DEFAULT ((1)) NOT NULL,
     [Remark]     VARCHAR (250) NULL,
     PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_PeriodId_Periods] FOREIGN KEY ([PeriodId]) REFERENCES [dbo].[Period] ([Id]),
-    CONSTRAINT [FK_QuestionId_Questions] FOREIGN KEY ([QuestionId]) REFERENCES [dbo].[Question] ([Id]),
-    CONSTRAINT [FK_UserId_Users] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id]),
-    CONSTRAINT [FK_ProjectId_Project] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id])
+    CONSTRAINT [FK_Answer_PeriodId_Period] FOREIGN KEY ([PeriodId]) REFERENCES [dbo].[Period] ([Id]),
+    CONSTRAINT [FK_Answer_QuestionId_Question] FOREIGN KEY ([QuestionId]) REFERENCES [dbo].[Question] ([Id]),
+    CONSTRAINT [FK_Answer_UserId_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id])
 );
+
+

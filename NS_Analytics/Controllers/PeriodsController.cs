@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using NS_Analytics.Models;
+using NS_Analytics.ViewModels;
 
 namespace NS_Analytics.Controllers
 {
@@ -17,7 +18,8 @@ namespace NS_Analytics.Controllers
         // GET: Periods
         public ActionResult Index()
         {
-            return View(db.Period.ToList());
+            var period = db.Period.Include(p => p.Project);
+            return View(period.ToList());
         }
 
         // GET: Periods/Details/5
@@ -38,6 +40,7 @@ namespace NS_Analytics.Controllers
         // GET: Periods/Create
         public ActionResult Create()
         {
+            ViewBag.ProjectId = new SelectList(db.Project, "Id", "Name");
             return View();
         }
 
@@ -46,7 +49,7 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Name,Active")] Period period)
+        public ActionResult Create([Bind(Include = "Id,Name,Active,ProjectId")] Period period)
         {
             if (ModelState.IsValid)
             {
@@ -55,6 +58,7 @@ namespace NS_Analytics.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ProjectId = new SelectList(db.Project, "Id", "Name", period.ProjectId);
             return View(period);
         }
 
@@ -70,7 +74,20 @@ namespace NS_Analytics.Controllers
             {
                 return HttpNotFound();
             }
-            return View(period);
+            ViewBag.ProjectId = new SelectList(db.Project, "Id", "Name", period.ProjectId);
+            ViewBag.Users = db.User;
+
+            var model = new PeriodViewModel();
+            model.Period = period;
+            
+            var allUsers = db.User.ToList();
+            model.AllUsers = allUsers.Select(o => new SelectListItem
+            {
+                Text = o.Name,
+                Value = o.Id.ToString()
+            });
+            
+            return View(model);
         }
 
         // POST: Periods/Edit/5
@@ -78,15 +95,32 @@ namespace NS_Analytics.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Name,Active")] Period period)
+        public ActionResult Edit(PeriodViewModel model)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(period).State = EntityState.Modified;
+                var periodToUpdate = db.Period.Include(i => i.User).First(i => i.Id == model.Period.Id);
+
+                var newUsers = db.User.Where(u => model.SelectedUsers.Contains(u.Id)).ToList();
+                var updatedUsers = new HashSet<int>(model.SelectedUsers);
+                foreach (var user in db.User)
+                {
+                    if (!updatedUsers.Contains(user.Id))
+                    {
+                        periodToUpdate.User.Remove(user);
+                    }
+                    else
+                    {
+                        periodToUpdate.User.Add(user);
+                    }
+                }
+
+                db.Entry(periodToUpdate).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(period);
+            ViewBag.ProjectId = new SelectList(db.Project, "Id", "Name", model.Period.ProjectId);
+            return View(model);
         }
 
         // GET: Periods/Delete/5

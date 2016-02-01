@@ -17,14 +17,17 @@ namespace NS_Analytics.Models
         public User()
         {
             this.Answer = new HashSet<Answer>();
+            this.Period = new HashSet<Period>();
         }
     
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Role { get; set; }
+        public Nullable<int> RoleId { get; set; }
         public string Username { get; set; }
         public string Password { get; set; }
     
         public virtual ICollection<Answer> Answer { get; set; }
+        public virtual Role Role { get; set; }
+        public virtual ICollection<Period> Period { get; set; }
     }
 }

@@ -107,7 +107,7 @@ namespace NS_Analytics.Controllers
 
             foreach (var id in missingQuestionIds)
             {
-                db.Answer.Add(new Answer { QuestionId = id, Value = 0, PeriodId = periodId, UserId = userId, ProjectId = projectId });
+                db.Answer.Add(new Answer { QuestionId = id, Value = 0, PeriodId = periodId, UserId = userId });
             }
             db.SaveChanges();
 

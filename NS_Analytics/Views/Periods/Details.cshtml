@@ -1,4 +1,4 @@
-﻿@model NS_Analytics.Models.Period
+﻿@model NS_Analytics.ViewModels.PeriodViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -11,24 +11,32 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Period.Name)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Name)
+            @Html.DisplayFor(model => model.Period.Name)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Active)
+            @Html.DisplayNameFor(model => model.Period.Active)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Active)
+            @Html.DisplayFor(model => model.Period.Active)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Period.Project.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Period.Project.Name)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Period.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

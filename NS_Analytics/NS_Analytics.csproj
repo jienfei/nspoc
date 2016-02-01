@@ -176,6 +176,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ManagementController.cs" />
     <Compile Include="Controllers\MaturityScanController.cs" />
     <Compile Include="Controllers\PeriodsController.cs" />
     <Compile Include="Controllers\ProjectsController.cs" />
@@ -219,6 +220,9 @@
     <Compile Include="Models\Question.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Role.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\User.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -226,6 +230,7 @@
     <Compile Include="DAL\QuestionRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AnswersViewModel.cs" />
+    <Compile Include="ViewModels\PeriodViewModel.cs" />
     <Compile Include="ViewModels\QuestionsInputViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -341,6 +346,8 @@
     <Content Include="Views\MaturityScan\REMS4.cshtml" />
     <Content Include="Views\MaturityScan\REMS5.cshtml" />
     <Content Include="Views\MaturityScan\REMS6.cshtml" />
+    <Content Include="Views\Management\Questions.cshtml" />
+    <Content Include="Views\Management\Projects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

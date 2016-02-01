@@ -19,11 +19,9 @@ namespace NS_Analytics.Models
         public int PeriodId { get; set; }
         public int Value { get; set; }
         public int UserId { get; set; }
-        public int ProjectId { get; set; }
         public string Remark { get; set; }
     
         public virtual Period Period { get; set; }
-        public virtual Project Project { get; set; }
         public virtual Question Question { get; set; }
         public virtual User User { get; set; }
     }

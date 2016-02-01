@@ -14,7 +14,6 @@
           <Property Name="PeriodId" Type="int" Nullable="false" />
           <Property Name="Value" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="ProjectId" Type="int" Nullable="false" />
           <Property Name="Remark" Type="varchar" MaxLength="250" />
         </EntityType>
         <EntityType Name="Category">
@@ -30,7 +29,8 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
-          <Property Name="Active" Type="bit" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+          <Property Name="ProjectId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -47,16 +47,67 @@
           <Property Name="Value" Type="varchar(max)" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="250" />
-          <Property Name="Role" Type="nvarchar" MaxLength="250" />
+          <Property Name="RoleId" Type="int" />
           <Property Name="Username" Type="nvarchar" MaxLength="50" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="UserPeriod">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="PeriodId" />
+          </Key>
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="PeriodId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Answer_PeriodId_Period">
+          <End Role="Period" Type="Self.Period" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_QuestionId_Question">
+          <End Role="Question" Type="Self.Question" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="QuestionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Answer_UserId_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CategoryId_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Question" Type="Self.Question" Multiplicity="*" />
@@ -69,50 +120,50 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PeriodId_Periods">
-          <End Role="Period" Type="Self.Period" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Period">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Answer">
-              <PropertyRef Name="PeriodId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProjectId_Project">
+        <Association Name="FK_Period_ProjectId_Project">
           <End Role="Project" Type="Self.Project" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <End Role="Period" Type="Self.Period" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Project">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Answer">
+            <Dependent Role="Period">
               <PropertyRef Name="ProjectId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_QuestionId_Questions">
-          <End Role="Question" Type="Self.Question" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+        <Association Name="FK_User_RoleId_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Question">
+            <Principal Role="Role">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Answer">
-              <PropertyRef Name="QuestionId" />
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserId_Users">
+        <Association Name="FK_UserPeriod_PeriodId_Period">
+          <End Role="Period" Type="Self.Period" Multiplicity="1" />
+          <End Role="UserPeriod" Type="Self.UserPeriod" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Period">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserPeriod">
+              <PropertyRef Name="PeriodId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserPeriod_UserId_User">
           <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <End Role="UserPeriod" Type="Self.UserPeriod" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="User">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Answer">
+            <Dependent Role="UserPeriod">
               <PropertyRef Name="UserId" />
             </Dependent>
           </ReferentialConstraint>
@@ -123,26 +174,40 @@
           <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserPeriod" EntityType="Self.UserPeriod" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Answer_PeriodId_Period" Association="Self.FK_Answer_PeriodId_Period">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_QuestionId_Question" Association="Self.FK_Answer_QuestionId_Question">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Answer_UserId_User" Association="Self.FK_Answer_UserId_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
           <AssociationSet Name="FK_CategoryId_Category" Association="Self.FK_CategoryId_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Question" EntitySet="Question" />
           </AssociationSet>
-          <AssociationSet Name="FK_PeriodId_Periods" Association="Self.FK_PeriodId_Periods">
-            <End Role="Period" EntitySet="Period" />
-            <End Role="Answer" EntitySet="Answer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProjectId_Project" Association="Self.FK_ProjectId_Project">
+          <AssociationSet Name="FK_Period_ProjectId_Project" Association="Self.FK_Period_ProjectId_Project">
             <End Role="Project" EntitySet="Project" />
-            <End Role="Answer" EntitySet="Answer" />
+            <End Role="Period" EntitySet="Period" />
           </AssociationSet>
-          <AssociationSet Name="FK_QuestionId_Questions" Association="Self.FK_QuestionId_Questions">
-            <End Role="Question" EntitySet="Question" />
-            <End Role="Answer" EntitySet="Answer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserId_Users" Association="Self.FK_UserId_Users">
+          <AssociationSet Name="FK_User_RoleId_Role" Association="Self.FK_User_RoleId_Role">
+            <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
-            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPeriod_PeriodId_Period" Association="Self.FK_UserPeriod_PeriodId_Period">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="UserPeriod" EntitySet="UserPeriod" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserPeriod_UserId_User" Association="Self.FK_UserPeriod_UserId_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserPeriod" EntitySet="UserPeriod" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -155,26 +220,35 @@
           <EntitySet Name="Period" EntityType="NS_AnalyticModel.Period" />
           <EntitySet Name="Project" EntityType="NS_AnalyticModel.Project" />
           <EntitySet Name="Question" EntityType="NS_AnalyticModel.Question" />
+          <EntitySet Name="Role" EntityType="NS_AnalyticModel.Role" />
           <EntitySet Name="User" EntityType="NS_AnalyticModel.User" />
-          <AssociationSet Name="FK_PeriodId_Periods" Association="NS_AnalyticModel.FK_PeriodId_Periods">
+          <AssociationSet Name="FK_Answer_PeriodId_Period" Association="NS_AnalyticModel.FK_Answer_PeriodId_Period">
             <End Role="Period" EntitySet="Period" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProjectId_Project" Association="NS_AnalyticModel.FK_ProjectId_Project">
-            <End Role="Project" EntitySet="Project" />
-            <End Role="Answer" EntitySet="Answer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_QuestionId_Questions" Association="NS_AnalyticModel.FK_QuestionId_Questions">
+          <AssociationSet Name="FK_Answer_QuestionId_Question" Association="NS_AnalyticModel.FK_Answer_QuestionId_Question">
             <End Role="Question" EntitySet="Question" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
-          <AssociationSet Name="FK_UserId_Users" Association="NS_AnalyticModel.FK_UserId_Users">
+          <AssociationSet Name="FK_Answer_UserId_User" Association="NS_AnalyticModel.FK_Answer_UserId_User">
             <End Role="User" EntitySet="User" />
             <End Role="Answer" EntitySet="Answer" />
           </AssociationSet>
           <AssociationSet Name="FK_CategoryId_Category" Association="NS_AnalyticModel.FK_CategoryId_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Period_ProjectId_Project" Association="NS_AnalyticModel.FK_Period_ProjectId_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="Period" EntitySet="Period" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_RoleId_Role" Association="NS_AnalyticModel.FK_User_RoleId_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="UserPeriod" Association="NS_AnalyticModel.UserPeriod">
+            <End Role="Period" EntitySet="Period" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Answer">
@@ -186,12 +260,10 @@
           <Property Name="PeriodId" Type="Int32" Nullable="false" />
           <Property Name="Value" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="ProjectId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.FK_PeriodId_Periods" FromRole="Answer" ToRole="Period" />
-          <NavigationProperty Name="Project" Relationship="NS_AnalyticModel.FK_ProjectId_Project" FromRole="Answer" ToRole="Project" />
-          <NavigationProperty Name="Question" Relationship="NS_AnalyticModel.FK_QuestionId_Questions" FromRole="Answer" ToRole="Question" />
-          <NavigationProperty Name="User" Relationship="NS_AnalyticModel.FK_UserId_Users" FromRole="Answer" ToRole="User" />
           <Property Name="Remark" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.FK_Answer_PeriodId_Period" FromRole="Answer" ToRole="Period" />
+          <NavigationProperty Name="Question" Relationship="NS_AnalyticModel.FK_Answer_QuestionId_Question" FromRole="Answer" ToRole="Question" />
+          <NavigationProperty Name="User" Relationship="NS_AnalyticModel.FK_Answer_UserId_User" FromRole="Answer" ToRole="User" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -207,8 +279,11 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Active" Type="Boolean" />
-          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_PeriodId_Periods" FromRole="Period" ToRole="Answer" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <Property Name="ProjectId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_Answer_PeriodId_Period" FromRole="Period" ToRole="Answer" />
+          <NavigationProperty Name="Project" Relationship="NS_AnalyticModel.FK_Period_ProjectId_Project" FromRole="Period" ToRole="Project" />
+          <NavigationProperty Name="User" Relationship="NS_AnalyticModel.UserPeriod" FromRole="Period" ToRole="User" />
         </EntityType>
         <EntityType Name="Project">
           <Key>
@@ -216,7 +291,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_ProjectId_Project" FromRole="Project" ToRole="Answer" />
+          <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.FK_Period_ProjectId_Project" FromRole="Project" ToRole="Period" />
         </EntityType>
         <EntityType Name="Question">
           <Key>
@@ -225,8 +300,16 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Value" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_QuestionId_Questions" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_Answer_QuestionId_Question" FromRole="Question" ToRole="Answer" />
           <NavigationProperty Name="Category" Relationship="NS_AnalyticModel.FK_CategoryId_Category" FromRole="Question" ToRole="Category" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="User" Relationship="NS_AnalyticModel.FK_User_RoleId_Role" FromRole="Role" ToRole="User" />
         </EntityType>
         <EntityType Name="User">
           <Key>
@@ -234,12 +317,14 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="Role" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="RoleId" Type="Int32" />
           <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_UserId_Users" FromRole="User" ToRole="Answer" />
+          <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_Answer_UserId_User" FromRole="User" ToRole="Answer" />
+          <NavigationProperty Name="Role" Relationship="NS_AnalyticModel.FK_User_RoleId_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Period" Relationship="NS_AnalyticModel.UserPeriod" FromRole="User" ToRole="Period" />
         </EntityType>
-        <Association Name="FK_PeriodId_Periods">
+        <Association Name="FK_Answer_PeriodId_Period">
           <End Type="NS_AnalyticModel.Period" Role="Period" Multiplicity="1" />
           <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -251,19 +336,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProjectId_Project">
-          <End Type="NS_AnalyticModel.Project" Role="Project" Multiplicity="1" />
-          <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Project">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Answer">
-              <PropertyRef Name="ProjectId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_QuestionId_Questions">
+        <Association Name="FK_Answer_QuestionId_Question">
           <End Type="NS_AnalyticModel.Question" Role="Question" Multiplicity="1" />
           <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -275,7 +348,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_UserId_Users">
+        <Association Name="FK_Answer_UserId_User">
           <End Type="NS_AnalyticModel.User" Role="User" Multiplicity="1" />
           <End Type="NS_AnalyticModel.Answer" Role="Answer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -299,6 +372,34 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Period_ProjectId_Project">
+          <End Type="NS_AnalyticModel.Project" Role="Project" Multiplicity="1" />
+          <End Type="NS_AnalyticModel.Period" Role="Period" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Period">
+              <PropertyRef Name="ProjectId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_RoleId_Role">
+          <End Type="NS_AnalyticModel.Role" Role="Role" Multiplicity="0..1" />
+          <End Type="NS_AnalyticModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="UserPeriod">
+          <End Type="NS_AnalyticModel.Period" Role="Period" Multiplicity="*" />
+          <End Type="NS_AnalyticModel.User" Role="User" Multiplicity="*" />
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -311,7 +412,6 @@
             <EntityTypeMapping TypeName="NS_AnalyticModel.Answer">
               <MappingFragment StoreEntitySet="Answer">
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="Value" ColumnName="Value" />
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
@@ -331,6 +431,7 @@
           <EntitySetMapping Name="Period">
             <EntityTypeMapping TypeName="NS_AnalyticModel.Period">
               <MappingFragment StoreEntitySet="Period">
+                <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -354,17 +455,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="NS_AnalyticModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="Role" ColumnName="Role" />
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.Role">
+              <MappingFragment StoreEntitySet="Role">
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="UserPeriod" TypeName="NS_AnalyticModel.UserPeriod" StoreEntitySet="UserPeriod">
+            <EndProperty Name="User">
+              <ScalarProperty Name="Id" ColumnName="UserId" />
+            </EndProperty>
+            <EndProperty Name="Period">
+              <ScalarProperty Name="Id" ColumnName="PeriodId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

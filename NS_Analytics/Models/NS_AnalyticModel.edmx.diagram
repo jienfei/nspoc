@@ -5,17 +5,20 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="66cc902ec7f74b2e8b97cf27ea0bd0e1" Name="Diagram1" >
-        <EntityTypeShape EntityType="NS_AnalyticModel.Answer" Width="1.5" PointX="5.25" PointY="1" />
-        <EntityTypeShape EntityType="NS_AnalyticModel.Category" Width="1.5" PointX="0.75" PointY="1.625" />
-        <EntityTypeShape EntityType="NS_AnalyticModel.Period" Width="1.5" PointX="3" PointY="5" />
-        <EntityTypeShape EntityType="NS_AnalyticModel.Project" Width="1.5" PointX="8.125" PointY="1.875" />
-        <EntityTypeShape EntityType="NS_AnalyticModel.Question" Width="1.5" PointX="3" PointY="1.5" />
-        <EntityTypeShape EntityType="NS_AnalyticModel.User" Width="1.5" PointX="7.125" PointY="4.625" />
-        <AssociationConnector Association="NS_AnalyticModel.FK_PeriodId_Periods" />
-        <AssociationConnector Association="NS_AnalyticModel.FK_ProjectId_Project" />
-        <AssociationConnector Association="NS_AnalyticModel.FK_QuestionId_Questions" />
-        <AssociationConnector Association="NS_AnalyticModel.FK_UserId_Users" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Answer" Width="1.5" PointX="5.75" PointY="2.25" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Category" Width="1.5" PointX="0.75" PointY="1.125" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Period" Width="1.5" PointX="3" PointY="3.75" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Project" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Question" Width="1.5" PointX="3" PointY="0.75" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.Role" Width="1.5" PointX="8.875" PointY="1.125" />
+        <EntityTypeShape EntityType="NS_AnalyticModel.User" Width="1.5" PointX="8.25" PointY="3.625" />
+        <AssociationConnector Association="NS_AnalyticModel.FK_Answer_PeriodId_Period" />
+        <AssociationConnector Association="NS_AnalyticModel.FK_Answer_QuestionId_Question" />
+        <AssociationConnector Association="NS_AnalyticModel.FK_Answer_UserId_User" />
         <AssociationConnector Association="NS_AnalyticModel.FK_CategoryId_Category" />
+        <AssociationConnector Association="NS_AnalyticModel.FK_Period_ProjectId_Project" />
+        <AssociationConnector Association="NS_AnalyticModel.FK_User_RoleId_Role" />
+        <AssociationConnector Association="NS_AnalyticModel.UserPeriod" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
