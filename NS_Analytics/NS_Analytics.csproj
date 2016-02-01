@@ -346,8 +346,9 @@
     <Content Include="Views\MaturityScan\REMS4.cshtml" />
     <Content Include="Views\MaturityScan\REMS5.cshtml" />
     <Content Include="Views\MaturityScan\REMS6.cshtml" />
-    <Content Include="Views\Management\Questions.cshtml" />
-    <Content Include="Views\Management\Projects.cshtml" />
+    <Content Include="Views\Projects\NavProjects.cshtml" />
+    <Content Include="Views\Periods\NavPeriods.cshtml" />
+    <Content Include="Views\Questions\NavQuestions.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -359,7 +360,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Views\Management\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

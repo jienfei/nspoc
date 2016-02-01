@@ -11,17 +11,12 @@ namespace NS_Analytics.Controllers
         // GET: Management
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Index", "Projects");
         }
 
         public ActionResult Projects()
         {
-            return View();
-        }
-
-        public ActionResult Questions()
-        {
-            return View();
+            return RedirectToAction("Index", "Projects");
         }
     }
 }

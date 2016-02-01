@@ -24,9 +24,9 @@
                     <li>@Html.ActionLink("QuickScan", "Elicitatie", "Home")</li>
                     <li>@Html.ActionLink("MaturityScan", "REMS1", "MaturityScan")</li>
                     <li>@Html.ActionLink("Management", "Projects", "Management")</li>
-                    <li>@Html.ActionLink("Questions", "Index", "Questions")</li>
+                    @*<li>@Html.ActionLink("Questions", "Index", "Questions")</li>
                     <li>@Html.ActionLink("Periods", "Index", "Periods")</li>
-                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>
+                    <li>@Html.ActionLink("Projects", "Index", "Projects")</li>*@
                     <li>@Html.ActionLink("Results", "Index", "Results")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
@@ -37,7 +37,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - JFLi</p>
         </footer>
     </div>
 
