@@ -1,4 +1,5 @@
-﻿using NS_Analytics.Models;
+﻿using Microsoft.AspNet.Identity;
+using NS_Analytics.Models;
 using NS_Analytics.DAL;
 using NS_Analytics.ViewModels;
 using System;
@@ -49,6 +50,9 @@ namespace NS_Analytics.Controllers
 
         public ActionResult Analyse(int periodId = 1)
         {
+            var appDb = new ApplicationDbContext();
+            var result = appDb.Users.ToList();
+
             var userId = 1;
             var categoryId = 2;
             var projectId = 1;

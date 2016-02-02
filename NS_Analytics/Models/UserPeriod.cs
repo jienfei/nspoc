@@ -12,9 +12,11 @@ namespace NS_Analytics.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class UserPeriod
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int UserId { get; set; }
+        public int PeriodId { get; set; }
+    
+        public virtual Period Period { get; set; }
     }
 }

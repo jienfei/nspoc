@@ -14,6 +14,7 @@ namespace NS_Analytics.Controllers
     public class PeriodsController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();
+        private ApplicationDbContext identityDb = new ApplicationDbContext();
 
         // GET: Periods
         public ActionResult Index()
@@ -75,18 +76,21 @@ namespace NS_Analytics.Controllers
                 return HttpNotFound();
             }
             ViewBag.ProjectId = new SelectList(db.Project, "Id", "Name", period.ProjectId);
-            ViewBag.Users = db.User;
+            ViewBag.Users = identityDb.Users.ToList();
 
             var model = new PeriodViewModel();
             model.Period = period;
-            
-            var allUsers = db.User.ToList();
+            //model.UserPeriods = db.UserPeriod.Where(up => up.PeriodId == period.Id).ToList();
+
+            var allUsers = identityDb.Users.ToList();
             model.AllUsers = allUsers.Select(o => new SelectListItem
             {
-                Text = o.Name,
+                Text = o.UserName,
                 Value = o.Id.ToString()
             });
-            
+
+            model.SelectedUsers = db.UserPeriod.Where(up => up.PeriodId == period.Id).Select(up => up.UserId).ToList();
+
             return View(model);
         }
 
@@ -99,23 +103,27 @@ namespace NS_Analytics.Controllers
         {
             if (ModelState.IsValid)
             {
-                var periodToUpdate = db.Period.Include(i => i.User).First(i => i.Id == model.Period.Id);
+                //var periodToUpdate = db.Period.First(i => i.Id == model.Period.Id);
 
-                var newUsers = db.User.Where(u => model.SelectedUsers.Contains(u.Id)).ToList();
-                var updatedUsers = new HashSet<int>(model.SelectedUsers);
-                foreach (var user in db.User)
+                var currentUserperiods = db.UserPeriod.Where(up => up.PeriodId == model.Period.Id);
+                var currentUserIds = currentUserperiods.Select(up => up.UserId).ToList();
+
+                var selectedUsers = new HashSet<int>();
+                if (model.SelectedUsers != null)
+                    new HashSet<int>(model.SelectedUsers);
+
+                foreach (var user in identityDb.Users)
                 {
-                    if (!updatedUsers.Contains(user.Id))
+                    if (currentUserIds.Contains(user.Id) && !selectedUsers.Contains(user.Id))
                     {
-                        periodToUpdate.User.Remove(user);
+                        db.UserPeriod.Remove(currentUserperiods.First(up => up.UserId == user.Id));
                     }
-                    else
+                    else if (!currentUserIds.Contains(user.Id) && selectedUsers.Contains(user.Id))
                     {
-                        periodToUpdate.User.Add(user);
+                        db.UserPeriod.Add(new UserPeriod { UserId = user.Id, PeriodId = model.Period.Id });
                     }
                 }
 
-                db.Entry(periodToUpdate).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

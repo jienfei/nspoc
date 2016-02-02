@@ -17,7 +17,7 @@ namespace NS_Analytics.Models
         public Period()
         {
             this.Answer = new HashSet<Answer>();
-            this.User = new HashSet<User>();
+            this.UserPeriod = new HashSet<UserPeriod>();
         }
     
         public int Id { get; set; }
@@ -27,6 +27,6 @@ namespace NS_Analytics.Models
     
         public virtual ICollection<Answer> Answer { get; set; }
         public virtual Project Project { get; set; }
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<UserPeriod> UserPeriod { get; set; }
     }
 }

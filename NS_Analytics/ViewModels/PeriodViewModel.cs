@@ -10,23 +10,10 @@ namespace NS_Analytics.ViewModels
     public class PeriodViewModel
     {
         public Period Period { get; set; }
+        //public List<UserPeriod> UserPeriods { get; set; }
         public IEnumerable<SelectListItem> AllUsers { get; set; }
 
-        private List<int> selectedUsers;
-        public List<int> SelectedUsers 
-        { 
-            get
-            {
-                if (selectedUsers == null)
-                {
-                    selectedUsers = Period.User.Select(u => u.Id).ToList();
-                }
-                return selectedUsers;
-            } 
-            set
-            {
-                selectedUsers = value;
-            }
-        }
+        //private List<int> selectedUsers;
+        public List<int> SelectedUsers { get; set; }
     }
 }

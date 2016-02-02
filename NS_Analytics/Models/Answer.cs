@@ -23,6 +23,5 @@ namespace NS_Analytics.Models
     
         public virtual Period Period { get; set; }
         public virtual Question Question { get; set; }
-        public virtual User User { get; set; }
     }
 }
