@@ -111,7 +111,9 @@ namespace NS_Analytics.Models
         }
     }
 
-    public class ApplicationUserRole : IdentityUserRole<int> { }
+    public class ApplicationUserRole : IdentityUserRole<int> 
+    {
+    }
 
     public class ApplicationRole : IdentityRole<int, ApplicationUserRole> { }
 

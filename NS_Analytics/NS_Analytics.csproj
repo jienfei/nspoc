@@ -232,6 +232,7 @@
     <Compile Include="ViewModels\AnswersViewModel.cs" />
     <Compile Include="ViewModels\PeriodViewModel.cs" />
     <Compile Include="ViewModels\QuestionsInputViewModel.cs" />
+    <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\aspnet-NS_Analytics-20160130015439.mdf">
@@ -349,6 +350,9 @@
     <Content Include="Views\Projects\NavProjects.cshtml" />
     <Content Include="Views\Periods\NavPeriods.cshtml" />
     <Content Include="Views\Questions\NavQuestions.cshtml" />
+    <Content Include="Views\Management\Users.cshtml" />
+    <Content Include="Views\Management\NavUsers.cshtml" />
+    <Content Include="Views\Management\UserEdit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -362,7 +366,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
-    <Folder Include="Views\Management\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

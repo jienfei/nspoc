@@ -1,0 +1,43 @@
+﻿@model IEnumerable<NS_Analytics.ViewModels.UserViewModel>
+
+@Html.Partial("NavUsers")
+
+<h2>Index</h2>
+
+<p>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            
+        </th>
+        <th>
+            Username
+        </th>
+        <th>
+            Role
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.HiddenFor(m => item.UserId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "UserEdit", new { id = item.UserId }) |
+                @Html.ActionLink("Details", "UserDetails", new { id = item.UserId }) |
+                @Html.ActionLink("Delete", "UserDelete", new { id = item.UserId })
+            </td>
+        </tr>
+    }
+
+</table>
