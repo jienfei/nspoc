@@ -1,10 +1,11 @@
-INSERT INTO [dbo].[Role] ([Name]) VALUES ('Geen')
-INSERT INTO [dbo].[Role] ([Name]) VALUES ('Admin')
-INSERT INTO [dbo].[Role] ([Name]) VALUES ('Business Analist')
-INSERT INTO [dbo].[Role] ([Name]) VALUES ('Manager')
+INSERT INTO [NS].[Role] ([Name]) VALUES ('Geen')
+INSERT INTO [NS].[Role] ([Name]) VALUES ('Admin')
+INSERT INTO [NS].[Role] ([Name]) VALUES ('Business Analist')
+INSERT INTO [NS].[Role] ([Name]) VALUES ('Manager')
 
+INSERT INTO [NS].[User] Values ('Admin@admin.nl', 1, 'AIu81EER2TVIw/UJ+N0+QT3FgjTd7QtPyjI8nVGUB6C8rkrRX9KESuZhzV2m3vb3ww==', '', NULL, 0, 0, NULL, 1, 0, 'Admin@admin.nl')
 
-INSERT INTO [dbo].[User] VALUES ('Admin', NULL, 'admin', 'admin123')
+INSERT INTO [NS].[UserRole] Values (1, 1)
 
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Elicitatie')
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Analyse')

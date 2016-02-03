@@ -10,24 +10,24 @@ DROP TABLE [dbo].[Question];
 DROP TABLE [dbo].[Period];
 DROP TABLE [dbo].[Project];
 DROP TABLE [dbo].[Category];
-DROP TABLE [dbo].[User];
-DROP TABLE [dbo].[Role];
+--DROP TABLE [dbo].[User];
+--DROP TABLE [dbo].[Role];
 
-CREATE TABLE [dbo].[Role] (
-    [Id]   INT          IDENTITY (1, 1) NOT NULL,
-    [Name] VARCHAR (50) NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC)
-);
+--CREATE TABLE [dbo].[Role] (
+--    [Id]   INT          IDENTITY (1, 1) NOT NULL,
+--    [Name] VARCHAR (50) NULL,
+--    PRIMARY KEY CLUSTERED ([Id] ASC)
+--);
 
-CREATE TABLE [dbo].[User] (
-    [Id]       INT            IDENTITY (1, 1) NOT NULL,
-    [Name]     NVARCHAR (250) NULL,
-    [RoleId]   INT            NULL,
-    [Username] NVARCHAR (50)  NULL,
-    [Password] NVARCHAR (50)  NULL,
-    PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_User_RoleId_Role] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[Role] ([Id])
-);
+--CREATE TABLE [dbo].[User] (
+--    [Id]       INT            IDENTITY (1, 1) NOT NULL,
+--    [Name]     NVARCHAR (250) NULL,
+--    [RoleId]   INT            NULL,
+--    [Username] NVARCHAR (50)  NULL,
+--    [Password] NVARCHAR (50)  NULL,
+--    PRIMARY KEY CLUSTERED ([Id] ASC),
+--    CONSTRAINT [FK_User_RoleId_Role] FOREIGN KEY ([RoleId]) REFERENCES [dbo].[Role] ([Id])
+--);
 
 CREATE TABLE [dbo].[Category] (
     [Id]   INT           IDENTITY (1, 1) NOT NULL,
@@ -50,14 +50,12 @@ CREATE TABLE [dbo].[Period] (
     CONSTRAINT [FK_Period_ProjectId_Project] FOREIGN KEY ([ProjectId]) REFERENCES [dbo].[Project] ([Id])
 );
 
-CREATE TABLE [dbo].[UserPeriod]
-(
-	[UserId] INT NOT NULL , 
-    [PeriodId] INT NOT NULL, 
-    PRIMARY KEY ([UserId], [PeriodId]), 
-    CONSTRAINT [FK_UserPeriod_UserId_User] FOREIGN KEY ([UserId]) REFERENCES [User]([Id]), 
-    CONSTRAINT [FK_UserPeriod_PeriodId_Period] FOREIGN KEY ([PeriodId]) REFERENCES [Period]([Id]) 
-)
+CREATE TABLE [dbo].[UserPeriod] (
+    [UserId]   INT NOT NULL,
+    [PeriodId] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([UserId] ASC, [PeriodId] ASC),
+    CONSTRAINT [FK_UserPeriod_PeriodId_Period] FOREIGN KEY ([PeriodId]) REFERENCES [dbo].[Period] ([Id])
+);
 
 CREATE TABLE [dbo].[Question] (
     [Id]         INT           IDENTITY (1, 1) NOT NULL,
@@ -77,5 +75,5 @@ CREATE TABLE [dbo].[Answer] (
     PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_Answer_PeriodId_Period] FOREIGN KEY ([PeriodId]) REFERENCES [dbo].[Period] ([Id]),
     CONSTRAINT [FK_Answer_QuestionId_Question] FOREIGN KEY ([QuestionId]) REFERENCES [dbo].[Question] ([Id]),
-    CONSTRAINT [FK_Answer_UserId_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id])
+    --CONSTRAINT [FK_Answer_UserId_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[User] ([Id])
 );
