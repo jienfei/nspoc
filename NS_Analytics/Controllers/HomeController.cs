@@ -11,6 +11,7 @@ using System.Data.Entity;
 
 namespace NS_Analytics.Controllers
 {
+    [Authorize(Roles = "Analist, Admin")]
     public class HomeController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();

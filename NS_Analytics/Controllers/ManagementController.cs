@@ -1,4 +1,5 @@
-﻿using NS_Analytics.Models;
+﻿using Microsoft.AspNet.Identity;
+using NS_Analytics.Models;
 using NS_Analytics.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,7 @@ namespace NS_Analytics.Controllers
         {
             if (ModelState.IsValid)
             {
+                //userManager = new ApplicationUserManager(new ApplicationUserStore(identityDb));
                 userManager = new ApplicationUserManager(new ApplicationUserStore(identityDb));
 
                 var currentUser = identityDb.Users.Find(model.UserId);
@@ -77,21 +79,17 @@ namespace NS_Analytics.Controllers
                 if (model.SelectedRoles != null)
                     selectedRoles = new HashSet<int>(model.SelectedRoles);
 
-                var tasks = new List<Task>();
-                foreach (var role in identityDb.Roles)
+                foreach (var role in identityDb.Roles.ToList())
                 {
                     if (currentRoleIds.Contains(role.Id) && !selectedRoles.Contains(role.Id))
                     {
-                        var task = userManager.RemoveFromRoleAsync(currentUser.Id, role.Name);
-                        tasks.Add(task);
+                        userManager.RemoveFromRole(currentUser.Id, role.Name);
                     }
                     else if (!currentRoleIds.Contains(role.Id) && selectedRoles.Contains(role.Id))
                     {
-                        var task = userManager.AddToRoleAsync(currentUser.Id, role.Name);
-                        tasks.Add(task);
+                        userManager.AddToRole(currentUser.Id, role.Name);
                     }
                 }
-                Task.WaitAll(tasks.ToArray());
                 return RedirectToAction("Users");
             }
             return View(model);
