@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace NS_Analytics.Controllers
 {
+    [Authorize(Roles = "Manager, Admin")]
     public class ManagementController : Controller
     {
         private ApplicationDbContext identityDb = new ApplicationDbContext();

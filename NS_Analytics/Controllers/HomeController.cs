@@ -11,7 +11,7 @@ using System.Data.Entity;
 
 namespace NS_Analytics.Controllers
 {
-    [Authorize(Roles = "Analist, Admin")]
+    [Authorize]
     public class HomeController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();
@@ -22,16 +22,12 @@ namespace NS_Analytics.Controllers
             this.questionsRepository = questionsRepository;
         }
 
-        public ActionResult Index(int periodId = 1)
+        public ActionResult Index()
         {
-            var userId = 1;
-            var categoryId = 1;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
-            return View(model);
+            return View();
         }
 
+        [Authorize(Roles = "Analist, Admin")]
         public ActionResult Elicitatie(int periodId = 1)
         {
             var userId = 1;
@@ -49,6 +45,7 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("Elicitatie");
         }
 
+        [Authorize(Roles = "Analist, Admin")]
         public ActionResult Analyse(int periodId = 1)
         {
             var appDb = new ApplicationDbContext();
@@ -69,6 +66,7 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("Analyse");
         }
 
+        [Authorize(Roles = "Analist, Admin")]
         public ActionResult Specificatie(int periodId = 1)
         {
             var userId = 1;
@@ -86,6 +84,7 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("Specificatie");
         }
 
+        [Authorize(Roles = "Analist, Admin")]
         public ActionResult Validatie(int periodId = 1)
         {
             var userId = 1;

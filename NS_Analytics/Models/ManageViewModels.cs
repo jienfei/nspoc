@@ -13,6 +13,8 @@ namespace NS_Analytics.Models
         public bool TwoFactor { get; set; }
         public bool BrowserRemembered { get; set; }
         public IList<string> Roles { get; set; }
+        public int? SelectedPeriodId { get; set; }
+        public IEnumerable<System.Web.Mvc.SelectListItem> AllPeriods { get; set; }
     }
 
     public class ManageLoginsViewModel

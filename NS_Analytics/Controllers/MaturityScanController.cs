@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace NS_Analytics.Controllers
 {
+    [Authorize(Roles = "Analist, Admin")]
     public class MaturityScanController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();

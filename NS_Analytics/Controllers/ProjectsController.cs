@@ -10,6 +10,7 @@ using NS_Analytics.Models;
 
 namespace NS_Analytics.Controllers
 {
+    [Authorize(Roles = "Manager, Admin")]
     public class ProjectsController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();

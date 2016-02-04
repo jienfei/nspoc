@@ -15,6 +15,7 @@ namespace NS_Analytics.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();
 
         public ManageController()
         {
@@ -70,10 +71,26 @@ namespace NS_Analytics.Controllers
                 PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
                 TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
                 Logins = await UserManager.GetLoginsAsync(userId),
-                Roles = await UserManager.GetRolesAsync(userId)
+                Roles = await UserManager.GetRolesAsync(userId),
+                AllPeriods = db.Period.Select(p => new SelectListItem 
+                {
+                    Text = p.Name,
+                    Value = p.Id.ToString()
+                }),
+                SelectedPeriodId = UserManager.FindById(userId).SelectedPeriodId
                 //BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
             };
             return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Index(IndexViewModel model)
+        {
+            var user = UserManager.FindByName(User.Identity.Name);
+            user.SelectedPeriodId = model.SelectedPeriodId;
+            UserManager.Update(user);
+            return RedirectToAction("Index");
         }
 
         //

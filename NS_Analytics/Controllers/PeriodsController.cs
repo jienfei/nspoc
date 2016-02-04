@@ -11,6 +11,7 @@ using NS_Analytics.ViewModels;
 
 namespace NS_Analytics.Controllers
 {
+    [Authorize(Roles = "Manager, Admin")]
     public class PeriodsController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();

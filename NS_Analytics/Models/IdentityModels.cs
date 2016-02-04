@@ -16,6 +16,8 @@ namespace NS_Analytics.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser<int, ApplicationUserLogin, ApplicationUserRole, ApplicationUserClaim>
     {
+        public int? SelectedPeriodId { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser, int> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -79,7 +81,8 @@ namespace NS_Analytics.Models
                     p.SecurityStamp,
                     p.LockoutEnabled,
                     p.LockoutEndDateUtc,
-                    p.UserName
+                    p.UserName,
+                    p.SelectedPeriodId
                 });
             }).HasKey(c => c.Id);
             modelBuilder.Entity<ApplicationUser>().HasMany(c => c.Logins).WithOptional().HasForeignKey(c => c.UserId);
