@@ -1,4 +1,5 @@
-﻿using NS_Analytics.Models;
+﻿using Microsoft.AspNet.Identity;
+using NS_Analytics.Models;
 using NS_Analytics.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,18 @@ namespace NS_Analytics.Controllers
     public class MaturityScanController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();
+        private ApplicationDbContext identityDb = new ApplicationDbContext();
+        private ApplicationUserManager userManager;
 
-        public ActionResult REMS1(int periodId = 1)
+        public MaturityScanController()
         {
-            var model = AnswersFilter(periodId: periodId, userId: 1, categoryId: 5, projectId: 1);
+        }
 
+        public ActionResult REMS1()
+        {
+            var model = AnswersFilter(categoryId: 5);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -28,10 +36,11 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("REMS1");
         }
 
-        public ActionResult REMS2(int periodId = 1)
+        public ActionResult REMS2()
         {
-            var model = AnswersFilter(periodId: periodId, userId: 1, categoryId: 6, projectId: 1);
-
+            var model = AnswersFilter(categoryId: 6);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -42,10 +51,11 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("REMS2");
         }
 
-        public ActionResult REMS3(int periodId = 1)
+        public ActionResult REMS3()
         {
-            var model = AnswersFilter(periodId: periodId, userId: 1, categoryId: 7, projectId: 1);
-
+            var model = AnswersFilter(categoryId: 7);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -56,10 +66,11 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("REMS3");
         }
 
-        public ActionResult REMS4(int periodId = 1)
+        public ActionResult REMS4()
         {
-            var model = AnswersFilter(periodId: periodId, userId: 1, categoryId: 8, projectId: 1);
-
+            var model = AnswersFilter(categoryId: 8);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -70,10 +81,11 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("REMS4");
         }
 
-        public ActionResult REMS5(int periodId = 1)
+        public ActionResult REMS5()
         {
-            var model = AnswersFilter(periodId: periodId, userId: 1, categoryId: 9, projectId: 1);
-
+            var model = AnswersFilter(categoryId: 9);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -84,10 +96,11 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("REMS5");
         }
 
-        public ActionResult REMS6(int periodId = 1)
+        public ActionResult REMS6()
         {
-            var model = AnswersFilter(periodId: periodId, userId: 1, categoryId: 10, projectId: 1);
-
+            var model = AnswersFilter(categoryId: 10);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -98,9 +111,16 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("REMS6");
         }
 
-
-        private AnswersViewModel AnswersFilter(int periodId, int userId, int categoryId, int projectId)
+        private AnswersViewModel AnswersFilter(int categoryId)
         {
+            userManager = new ApplicationUserManager(new ApplicationUserStore(identityDb));
+            var user = userManager.FindByName(User.Identity.Name);
+            var userId = user.Id;
+            if (user.SelectedPeriodId == null)
+                return null;
+
+            var periodId = (int)user.SelectedPeriodId;
+
             var answers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
             var questions = db.Question.Where(q => q.CategoryId == categoryId).ToList();
 

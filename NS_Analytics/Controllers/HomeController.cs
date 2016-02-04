@@ -15,6 +15,9 @@ namespace NS_Analytics.Controllers
     public class HomeController : Controller
     {
         private NS_AnalyticModelContainer db = new NS_AnalyticModelContainer();
+        private ApplicationDbContext identityDb = new ApplicationDbContext();
+        private ApplicationUserManager userManager;
+
         private readonly IQuestionRepository questionsRepository;
 
         public HomeController(IQuestionRepository questionsRepository)
@@ -28,13 +31,11 @@ namespace NS_Analytics.Controllers
         }
 
         [Authorize(Roles = "Analist, Admin")]
-        public ActionResult Elicitatie(int periodId = 1)
+        public ActionResult Elicitatie()
         {
-            var userId = 1;
-            var categoryId = 1;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
+            var model = AnswersFilter(1);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -46,16 +47,11 @@ namespace NS_Analytics.Controllers
         }
 
         [Authorize(Roles = "Analist, Admin")]
-        public ActionResult Analyse(int periodId = 1)
+        public ActionResult Analyse()
         {
-            var appDb = new ApplicationDbContext();
-            var result = appDb.Users.ToList();
-
-            var userId = 1;
-            var categoryId = 2;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
+            var model = AnswersFilter(2);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -67,13 +63,11 @@ namespace NS_Analytics.Controllers
         }
 
         [Authorize(Roles = "Analist, Admin")]
-        public ActionResult Specificatie(int periodId = 1)
+        public ActionResult Specificatie()
         {
-            var userId = 1;
-            var categoryId = 3;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
+            var model = AnswersFilter(3);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -85,13 +79,11 @@ namespace NS_Analytics.Controllers
         }
 
         [Authorize(Roles = "Analist, Admin")]
-        public ActionResult Validatie(int periodId = 1)
+        public ActionResult Validatie()
         {
-            var userId = 1;
-            var categoryId = 4;
-            var projectId = 1;
-            var model = AnswersFilter(periodId, userId, categoryId, projectId);
-
+            var model = AnswersFilter(4);
+            if (model == null)
+                return HttpNotFound();
             return View(model);
         }
 
@@ -102,8 +94,16 @@ namespace NS_Analytics.Controllers
             return RedirectToAction("Validatie");
         }
 
-        private AnswersViewModel AnswersFilter(int periodId, int userId, int categoryId, int projectId)
+        private AnswersViewModel AnswersFilter(int categoryId)
         {
+            userManager = new ApplicationUserManager(new ApplicationUserStore(identityDb));
+            var user = userManager.FindByName(User.Identity.Name);
+            var userId = user.Id;
+            if (user.SelectedPeriodId == null)
+                return null;
+
+            var periodId = (int) user.SelectedPeriodId;
+
             var answers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
             var questions = db.Question.Where(q => q.CategoryId == categoryId).ToList();
 
