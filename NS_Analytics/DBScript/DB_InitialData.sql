@@ -2,9 +2,9 @@ INSERT INTO [NS].[Role] ([Name]) VALUES ('Admin')
 INSERT INTO [NS].[Role] ([Name]) VALUES ('Manager')
 INSERT INTO [NS].[Role] ([Name]) VALUES ('Analist')
 
-INSERT INTO [NS].[User] Values ('Admin@admin.nl', 1, 'AIu81EER2TVIw/UJ+N0+QT3FgjTd7QtPyjI8nVGUB6C8rkrRX9KESuZhzV2m3vb3ww==', '', NULL, 0, 0, NULL, 1, 0, 'Admin@admin.nl')
+INSERT INTO [NS].[User] Values (NULL, 'Admin@admin.nl', 1, 'AIu81EER2TVIw/UJ+N0+QT3FgjTd7QtPyjI8nVGUB6C8rkrRX9KESuZhzV2m3vb3ww==', '', NULL, 0, 0, NULL, 1, 0, 'Admin@admin.nl')
 
-INSERT INTO [NS].[UserRole] Values (1, 1)
+INSERT INTO [NS].[UserRole] Values (3, 1)
 
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Elicitatie')
 INSERT INTO [dbo].[Category] ([Name]) VALUES ('QuickScan - Analyse')

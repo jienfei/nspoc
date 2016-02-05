@@ -111,7 +111,7 @@ namespace NS_Analytics.Controllers
 
                 var selectedUsers = new HashSet<int>();
                 if (model.SelectedUsers != null)
-                    new HashSet<int>(model.SelectedUsers);
+                    selectedUsers = new HashSet<int>(model.SelectedUsers);
 
                 foreach (var user in identityDb.Users)
                 {

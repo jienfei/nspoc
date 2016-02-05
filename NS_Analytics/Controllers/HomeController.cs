@@ -104,10 +104,10 @@ namespace NS_Analytics.Controllers
 
             var periodId = (int) user.SelectedPeriodId;
 
-            var answers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
+            var existingAnswers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
             var questions = db.Question.Where(q => q.CategoryId == categoryId).ToList();
 
-            var missingQuestionIds = questions.Select(q => q.Id).Except(answers.Select(a => a.QuestionId));
+            var missingQuestionIds = questions.Select(q => q.Id).Except(existingAnswers.Select(a => a.QuestionId));
 
             foreach (var id in missingQuestionIds)
             {
@@ -115,10 +115,10 @@ namespace NS_Analytics.Controllers
             }
             db.SaveChanges();
 
-            answers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
+            existingAnswers = db.Answer.Where(a => a.PeriodId == periodId && a.Question.CategoryId == categoryId && a.UserId == userId).ToList();
 
             var model = new AnswersViewModel();
-            model.Answers = answers;
+            model.Answers = existingAnswers;
             return model;
         }
 
