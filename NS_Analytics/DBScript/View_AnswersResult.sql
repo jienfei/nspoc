@@ -13,14 +13,23 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE VIEW [dbo].[AnswersResult] AS
+SELECT 
+CategoryId,
+PeriodId,
+TotalQuestions,
+TotalUsers,
+TotalQuestions * TotalUsers MaxAnswers,
+CAST(Progress / (TotalQuestions * TotalUsers) * 100 AS DECIMAL(3,0)) Performance
+FROM (
 SELECT q.categoryid CategoryId
 , a.periodId PeriodId
-, count(q.id) TotalQuestions
+, count(DISTINCT q.id) TotalQuestions
 , count(DISTINCT a.userid) TotalUsers
-, sum(a.value) Value 
+, CAST(sum(a.value) AS DECIMAL(5,2)) Progress 
 FROM answer a
 INNER JOIN question q ON q.id = a.questionId 
-GROUP BY q.categoryid, a.periodId
+GROUP BY a.periodId, q.categoryid
+) RESULT
 GO
 
 

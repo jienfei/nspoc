@@ -47,13 +47,6 @@
           <Property Name="Value" Type="varchar(max)" />
           <Property Name="CategoryId" Type="int" Nullable="false" />
         </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="varchar" MaxLength="50" />
-        </EntityType>
         <EntityType Name="UserPeriod">
           <Key>
             <PropertyRef Name="UserId" />
@@ -61,6 +54,20 @@
           </Key>
           <Property Name="UserId" Type="int" Nullable="false" />
           <Property Name="PeriodId" Type="int" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\JIEN.FEI.LI\DOCUMENTS\VISUAL STUDIO 2013\PROJECTS\NS_ANALYTICS\NS_ANALYTICS\APP_DATA\NS_DB.MDF.dbo.AnswersResult' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="AnswersResult">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="PeriodId" />
+          </Key>
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="PeriodId" Type="int" Nullable="false" />
+          <Property Name="TotalQuestions" Type="int" />
+          <Property Name="TotalUsers" Type="int" />
+          <Property Name="MaxAnswers" Type="int" />
+          <Property Name="Performance" Type="decimal" Precision="3" Scale="0" />
         </EntityType>
         <Association Name="FK_Answer_PeriodId_Period">
           <End Role="Period" Type="Self.Period" Multiplicity="1" />
@@ -128,8 +135,17 @@
           <EntitySet Name="Period" EntityType="Self.Period" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserPeriod" EntityType="Self.UserPeriod" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AnswersResult" EntityType="Self.AnswersResult" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [AnswersResult].[CategoryId] AS [CategoryId], 
+    [AnswersResult].[PeriodId] AS [PeriodId], 
+    [AnswersResult].[TotalQuestions] AS [TotalQuestions], 
+    [AnswersResult].[TotalUsers] AS [TotalUsers], 
+    [AnswersResult].[MaxAnswers] AS [MaxAnswers], 
+    [AnswersResult].[Performance] AS [Performance]
+    FROM [dbo].[AnswersResult] AS [AnswersResult]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Answer_PeriodId_Period" Association="Self.FK_Answer_PeriodId_Period">
             <End Role="Period" EntitySet="Period" />
             <End Role="Answer" EntitySet="Answer" />
@@ -161,7 +177,6 @@
           <EntitySet Name="Period" EntityType="NS_AnalyticModel.Period" />
           <EntitySet Name="Project" EntityType="NS_AnalyticModel.Project" />
           <EntitySet Name="Question" EntityType="NS_AnalyticModel.Question" />
-          <EntitySet Name="Role" EntityType="NS_AnalyticModel.Role" />
           <EntitySet Name="UserPeriod" EntityType="NS_AnalyticModel.UserPeriod" />
           <AssociationSet Name="FK_Answer_PeriodId_Period" Association="NS_AnalyticModel.FK_Answer_PeriodId_Period">
             <End Role="Period" EntitySet="Period" />
@@ -183,6 +198,7 @@
             <End Role="Period" EntitySet="Period" />
             <End Role="UserPeriod" EntitySet="UserPeriod" />
           </AssociationSet>
+          <EntitySet Name="AnswersResult" EntityType="NS_AnalyticModel.AnswersResult" />
         </EntityContainer>
         <EntityType Name="Answer">
           <Key>
@@ -234,13 +250,6 @@
           <Property Name="CategoryId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Answer" Relationship="NS_AnalyticModel.FK_Answer_QuestionId_Question" FromRole="Question" ToRole="Answer" />
           <NavigationProperty Name="Category" Relationship="NS_AnalyticModel.FK_CategoryId_Category" FromRole="Question" ToRole="Category" />
-        </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="UserPeriod">
           <Key>
@@ -311,6 +320,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AnswersResult">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+            <PropertyRef Name="PeriodId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="PeriodId" Type="Int32" Nullable="false" />
+          <Property Name="TotalQuestions" Type="Int32" />
+          <Property Name="TotalUsers" Type="Int32" />
+          <Property Name="MaxAnswers" Type="Int32" />
+          <Property Name="Performance" Type="Int32" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -366,19 +387,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Role">
-            <EntityTypeMapping TypeName="NS_AnalyticModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="UserPeriod">
             <EntityTypeMapping TypeName="NS_AnalyticModel.UserPeriod">
               <MappingFragment StoreEntitySet="UserPeriod">
                 <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AnswersResult">
+            <EntityTypeMapping TypeName="NS_AnalyticModel.AnswersResult">
+              <MappingFragment StoreEntitySet="AnswersResult">
+                <ScalarProperty Name="Performance" ColumnName="Performance" />
+                <ScalarProperty Name="MaxAnswers" ColumnName="MaxAnswers" />
+                <ScalarProperty Name="TotalUsers" ColumnName="TotalUsers" />
+                <ScalarProperty Name="TotalQuestions" ColumnName="TotalQuestions" />
+                <ScalarProperty Name="PeriodId" ColumnName="PeriodId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

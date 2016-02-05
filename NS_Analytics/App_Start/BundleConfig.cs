@@ -25,7 +25,16 @@ namespace NS_Analytics
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Scripts/jqPlot/jquery.jqplot.css"));
+
+            bundles.Add(new ScriptBundle("~/bundles/jqplot").Include(
+                    "~/Scripts/jqPlot/jquery.jqplot.js",
+                    "~/Scripts/jqPlot/plugins/jqplot.barRenderer.js",
+                    "~/Scripts/jqPlot/plugins/jqplot.pieRenderer.js",
+                    "~/Scripts/jqPlot/plugins/jqplot.categoryAxisRenderer.js",
+                    "~/Scripts/jqPlot/plugins/jqplot.pointLabels.js"));
+
         }
     }
 }

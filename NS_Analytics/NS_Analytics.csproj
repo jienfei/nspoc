@@ -191,6 +191,9 @@
     <Compile Include="Models\Answer.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\AnswersResult.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Category.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -221,9 +224,6 @@
     <Compile Include="Models\Question.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Role.cs">
-      <DependentUpon>Model.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\UserPeriod.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -233,6 +233,7 @@
     <Compile Include="ViewModels\AnswersViewModel.cs" />
     <Compile Include="ViewModels\PeriodViewModel.cs" />
     <Compile Include="ViewModels\QuestionsInputViewModel.cs" />
+    <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -433,6 +434,7 @@
     <Content Include="Views\Management\Users.cshtml" />
     <Content Include="Views\Management\NavUsers.cshtml" />
     <Content Include="Views\Management\UserEdit.cshtml" />
+    <Content Include="Views\Results\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -446,7 +448,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Authentication\" />
-    <Folder Include="Views\Results\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

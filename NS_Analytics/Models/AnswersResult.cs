@@ -12,9 +12,13 @@ namespace NS_Analytics.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Role
+    public partial class AnswersResult
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int CategoryId { get; set; }
+        public int PeriodId { get; set; }
+        public Nullable<int> TotalQuestions { get; set; }
+        public Nullable<int> TotalUsers { get; set; }
+        public Nullable<int> MaxAnswers { get; set; }
+        public Nullable<int> Performance { get; set; }
     }
 }

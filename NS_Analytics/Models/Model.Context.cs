@@ -30,7 +30,7 @@ namespace NS_Analytics.Models
         public virtual DbSet<Period> Period { get; set; }
         public virtual DbSet<Project> Project { get; set; }
         public virtual DbSet<Question> Question { get; set; }
-        public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<UserPeriod> UserPeriod { get; set; }
+        public virtual DbSet<AnswersResult> AnswersResult { get; set; }
     }
 }
