@@ -17,10 +17,10 @@
     <div class="form-horizontal">
         <div class="form-group">
             @Html.Label("Password", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-control-static col-md-10">
                 @if (Model.HasPassword)
                 {
-                    @Html.ActionLink("Change your password", "ChangePassword", new { htmlAttributes = new { @class = "form-control" }})
+                    @Html.ActionLink("Change your password", "ChangePassword", new { htmlAttributes = new { @class = "form-control" } })
                 }
                 else
                 {
@@ -31,7 +31,7 @@
 
         <div class="form-group">
             @Html.Label("Roles", new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
+            <div class="form-control-static col-md-10">
                 @String.Join(";", Model.Roles)
             </div>
         </div>

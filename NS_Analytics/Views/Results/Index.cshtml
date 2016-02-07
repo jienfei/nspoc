@@ -4,7 +4,7 @@
 <h2>Charts</h2>
 
 <div class="form-group">
-    @Html.Label("Selected Period", new { @class = "control-label col-md-2" })
+    @Html.Label("Selected Period", new { @class = "form-control-static control-label col-md-2" })
     <div class="col-md-10">
         @Html.DropDownListFor(model => model.AllPeriods.First().Value, Model.AllPeriods, new { id = "dropdown", @class = "form-control" })
     </div>
