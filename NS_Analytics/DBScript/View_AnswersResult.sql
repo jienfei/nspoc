@@ -19,13 +19,13 @@ PeriodId,
 TotalQuestions,
 TotalUsers,
 TotalQuestions * TotalUsers MaxAnswers,
-CAST(Progress / (TotalQuestions * TotalUsers) * 100 AS DECIMAL(3,0)) Performance
+Performance
 FROM (
 SELECT q.categoryid CategoryId
 , a.periodId PeriodId
 , count(DISTINCT q.id) TotalQuestions
 , count(DISTINCT a.userid) TotalUsers
-, CAST(sum(a.value) AS DECIMAL(5,2)) Progress 
+, sum(a.value) Performance 
 FROM answer a
 INNER JOIN question q ON q.id = a.questionId 
 GROUP BY a.periodId, q.categoryid

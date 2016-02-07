@@ -17,16 +17,36 @@ namespace NS_Analytics.Controllers
         // GET: Results
         public ActionResult Index()
         {
-            var periodId = 1;
             var model = new ResultsViewModel();
+            model.AllPeriods = db.Period.Select(p => new SelectListItem
+            {
+                Text = p.Name,
+                Value = p.Id.ToString()
+            });
+
+            return View(model);
+
+            
+        }
+
+        public ActionResult Chart(int id = 0)
+        {
+            var periodId = id;
+            if (periodId == 0)
+                periodId = db.Period.First().Id;
+
+            var model = new ChartViewModel();
             var results = db.AnswersResult;
 
             var usersInPeriod = db.UserPeriod.Count(up => up.PeriodId == periodId);
             var questionsInQuickScan = db.Question.Count(r => r.CategoryId >= 1 && r.CategoryId <= 4);
             var questionsInMaturityScan = db.Question.Count(r => r.CategoryId >= 5 && r.CategoryId <= 10);
 
-            var performanceInQuickScan = results.Where(r => r.CategoryId >= 1 && r.CategoryId <= 4 && r.PeriodId == periodId).Sum(r => r.Performance).Value;
-            var performanceInMaturityScan = results.Where(r => r.CategoryId >= 5 && r.CategoryId <= 10 && r.PeriodId == periodId).Sum(r => r.Performance).Value;
+            var answersQuickScan = results.Where(r => r.CategoryId >= 1 && r.CategoryId <= 4 && r.PeriodId == periodId);
+            var performanceInQuickScan = answersQuickScan.Any() ? answersQuickScan.Sum(r => r.Performance).Value : 0;
+            
+            var answersMaturityScan = results.Where(r => r.CategoryId >= 5 && r.CategoryId <= 10 && r.PeriodId == periodId);
+            var performanceInMaturityScan = answersMaturityScan.Any() ? answersMaturityScan.Sum(r => r.Performance).Value : 0;
 
             model.Values = new List<decimal>()
             {
@@ -39,7 +59,7 @@ namespace NS_Analytics.Controllers
                 "QuickScan", "MaturityScan"
             };
 
-            return View(model);
+            return PartialView("Chart", model);
         }
     }
 }

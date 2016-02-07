@@ -231,9 +231,10 @@
     <Compile Include="DAL\QuestionRepository.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AnswersViewModel.cs" />
+    <Compile Include="ViewModels\ResultsViewModel.cs" />
     <Compile Include="ViewModels\PeriodViewModel.cs" />
     <Compile Include="ViewModels\QuestionsInputViewModel.cs" />
-    <Compile Include="ViewModels\ResultsViewModel.cs" />
+    <Compile Include="ViewModels\ChartViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -435,6 +436,7 @@
     <Content Include="Views\Management\NavUsers.cshtml" />
     <Content Include="Views\Management\UserEdit.cshtml" />
     <Content Include="Views\Results\Index.cshtml" />
+    <Content Include="Views\Results\Chart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
